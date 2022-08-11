@@ -1,0 +1,44 @@
+.search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  background-color: #ddd;
+  border-radius: 12px;
+  margin: 0.4rem 0.4rem 0 0.4rem;
+  transition: 0.3s;
+}
+
+.title {
+  display: flex;
+}
+
+i {
+  transform: translateY(0.2rem);
+  font-size: 2rem;
+  height: 2rem;
+  margin: 0 1rem;
+  transform: none;
+}
+
+input {
+  width: 20rem;
+  height: 2.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 12px;
+  padding-left: 1rem;
+}
+
+.template {
+  background-color: rgba(222, 222, 222, 0.2);
+}
+
+.template input {
+  opacity: 0.4;
+}
+
+.transformed {
+  transform: rotate(-45deg);
+  opacity: 0.8;
+}

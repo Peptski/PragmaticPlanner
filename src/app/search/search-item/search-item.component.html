@@ -1,1 +1,14 @@
-<p>search-item works!</p>
+<div class="search-item" [ngClass]="{ template: templateElement }">
+  <div class="title">
+    <i
+      class="ph-arrows-out-cardinal"
+      [style.opacity]="templateElement ? 0 : 1"
+    ></i>
+    <input type="text" [value]="targetStop" />
+  </div>
+  <i
+    class="ph-x"
+    (click)="toggleActive()"
+    [ngClass]="{ transformed: templateElement }"
+  ></i>
+</div>

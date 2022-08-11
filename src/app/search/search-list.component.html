@@ -1,0 +1,7 @@
+<div class="search-list">
+  <app-search-item
+    *ngFor="let item of searchItems"
+    [targetStop]="item"
+  ></app-search-item>
+  <app-search-item [templateElement]="true"></app-search-item>
+</div>
