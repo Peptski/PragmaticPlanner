@@ -1,0 +1,51 @@
+.settings {
+  height: 5rem;
+  background-color: #ccc;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: antiquewhite;
+  overflow: hidden;
+  height: 3.5rem;
+  border-radius: 12px;
+  width: 8rem;
+}
+
+button {
+  height: 100%;
+  width: 100%;
+  background-color: bisque;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+button.active {
+  background-color: azure;
+}
+
+.date {
+  height: 2rem;
+  border-radius: 12px;
+  width: 10rem;
+}
+
+.time {
+  height: 2rem;
+  border-radius: 12px;
+  width: 6rem;
+}
+
+.time,
+.date {
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+}

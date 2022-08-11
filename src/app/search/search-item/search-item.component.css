@@ -1,3 +1,7 @@
+* {
+  transition: 0.3s;
+}
+
 .search-item {
   display: flex;
   justify-content: space-between;
@@ -6,7 +10,6 @@
   background-color: #ddd;
   border-radius: 12px;
   margin: 0.4rem 0.4rem 0 0.4rem;
-  transition: 0.3s;
 }
 
 .title {
