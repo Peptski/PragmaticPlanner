@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SearchComponent } from './search/search-list.component';
 import { SettingsComponent } from './settings/settings.component';
 import { TripListComponent } from './trip-list/trip-list.component';
+import { Trip } from './trip.model';
 
 @Component({
   standalone: true,
@@ -10,4 +11,6 @@ import { TripListComponent } from './trip-list/trip-list.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {}
+export class AppComponent {
+  trips: Trip[] = [];
+}

@@ -16,6 +16,10 @@ export class SearchItemComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  dragStartHandler(event: DragEvent): void {}
+
+  dragEndHandler(event: DragEvent): void {}
+
   toggleActive() {
     this.templateElement = !this.templateElement;
   }
