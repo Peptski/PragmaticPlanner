@@ -4,9 +4,9 @@
     <button type="button" class="btn-mode">Departure</button>
   </div>
 
-  <form #form="ngForm">
-    <input class="time" type="time" ngModel name="time" />
-    <input class="date" type="date" ngModel name="date" />
+  <form [formGroup]="dateForm" (ngSubmit)="onSubmit()">
+    <input class="time" type="time" formControlName="time" />
+    <input class="date" type="date" formControlName="date" />
 
     <button type="submit" class="btn-submit">Search</button>
   </form>

@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppRoutingModule } from './app/app-routing.module';
@@ -10,5 +11,5 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [importProvidersFrom(AppRoutingModule)],
+  providers: [importProvidersFrom(AppRoutingModule, HttpClientModule)],
 });

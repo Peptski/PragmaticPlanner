@@ -1,28 +1,29 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SearchService } from '../shared/search.service';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
 })
-export class SettingsComponent implements OnInit, AfterViewInit {
-  @ViewChild('form') dateForm!: NgForm;
+export class SettingsComponent implements OnInit {
+  dateForm: FormGroup;
 
-  constructor() {}
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      let date = new Date();
-      this.dateForm.setValue({
-        date: date.toLocaleDateString(),
-        time: date.toLocaleTimeString().slice(0, -3),
-      });
+  constructor(private searchService: SearchService) {
+    let date = new Date();
+    this.dateForm = new FormGroup({
+      time: new FormControl(date.toLocaleTimeString().slice(0, -3)),
+      date: new FormControl(date.toLocaleDateString()),
     });
   }
 
-  ngOnInit(): void {}
+  onSubmit() {}
+
+  ngOnInit(): void {
+    this.dateForm.valueChanges.subscribe((x) => console.log(x));
+  }
 }

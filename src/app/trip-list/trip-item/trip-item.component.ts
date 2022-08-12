@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Trip } from 'src/app/trip.model';
+import { Trip } from 'src/app/shared/trip.model';
 
 @Component({
   selector: 'app-trip-item',
