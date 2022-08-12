@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Trip } from 'src/app/trip.model';
 
 @Component({
   selector: 'app-trip-item',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './trip-item.component.html',
-  styleUrls: ['./trip-item.component.css']
+  styleUrls: ['./trip-item.component.css'],
 })
 export class TripItemComponent implements OnInit {
+  @Input() trip!: Trip;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

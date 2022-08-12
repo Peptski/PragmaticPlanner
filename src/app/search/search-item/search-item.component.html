@@ -1,14 +1,20 @@
 <div class="search-item" [ngClass]="{ template: templateElement }">
   <div class="title">
-    <i
-      class="ph-arrows-out-cardinal"
-      [style.opacity]="templateElement ? 0 : 1"
-    ></i>
+    <div class="icon">
+      <i
+        class="ph-arrows-out-cardinal"
+        [style.opacity]="templateElement ? 0 : 1"
+      ></i>
+    </div>
+
     <input type="text" [value]="targetStop" />
   </div>
-  <i
-    class="ph-x"
-    (click)="toggleActive()"
-    [ngClass]="{ transformed: templateElement }"
-  ></i>
+
+  <div class="icon">
+    <i
+      class="ph-x clickable"
+      (click)="toggleActive()"
+      [ngClass]="{ transformed: templateElement }"
+    ></i>
+  </div>
 </div>

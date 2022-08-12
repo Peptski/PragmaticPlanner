@@ -1,1 +1,19 @@
-<p>trip-item works!</p>
+<div class="trip" [style.height]="3 * trip.stops.length + 1 + 'rem'">
+  <div class="container">
+    <span *ngFor="let stop of trip.stops" class="stop-item">{{ stop }} </span>
+  </div>
+
+  <div class="container">
+    <span *ngFor="let line of trip.lines" class="line-item">{{ line }} </span>
+  </div>
+
+  <div class="container">
+    <span *ngFor="let arrival of trip.arrivalPerStop" class="arrival-item">
+      {{ arrival.toLocaleTimeString().slice(0, -3) }}</span
+    >
+  </div>
+
+  <div class="icon">
+    <i class="ph-caret-down"></i>
+  </div>
+</div>

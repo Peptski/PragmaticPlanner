@@ -14,14 +14,24 @@
 
 .title {
   display: flex;
+  align-items: center;
 }
 
-i {
-  transform: translateY(0.2rem);
-  font-size: 2rem;
-  height: 2rem;
-  margin: 0 1rem;
-  transform: none;
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon i {
+  font-size: 2.4rem;
+  padding: 0.4rem;
+  border-radius: 50%;
+  margin: 0.4rem;
+}
+
+.clickable {
+  background-color: #ccc;
 }
 
 input {
