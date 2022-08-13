@@ -1,15 +1,17 @@
-<div class="trip" [style.height]="3 * trip.stops.length + 1 + 'rem'">
+<div class="trip" [style.height]="3 * trip.Leg.length + 1 + 'rem'">
   <div class="container">
-    <span *ngFor="let stop of trip.stops" class="stop-item">{{ stop }} </span>
+    <span *ngFor="let leg of trip.Leg" class="stop-item"
+      >{{ leg.Origin.name }} - {{ leg.Destination.name }}
+    </span>
   </div>
 
   <div class="container">
-    <span *ngFor="let line of trip.lines" class="line-item">{{ line }} </span>
+    <span *ngFor="let leg of trip.Leg" class="line-item">{{ leg.sname }} </span>
   </div>
 
   <div class="container">
-    <span *ngFor="let arrival of trip.arrivalPerStop" class="arrival-item">
-      {{ arrival.toLocaleTimeString().slice(0, -3) }}</span
+    <span *ngFor="let leg of trip.Leg" class="arrival-item">
+      {{ leg.Destination.time }}</span
     >
   </div>
 

@@ -26,4 +26,8 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     this.dateForm.valueChanges.subscribe((x) => console.log(x));
   }
+
+  search() {
+    this.searchService.searchTrip();
+  }
 }

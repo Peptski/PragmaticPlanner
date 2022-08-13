@@ -1,7 +1,13 @@
-<div class="search-list">
+<div class="search-list" cdkDropList (cdkDropListDropped)="drop($event)">
   <app-search-item
-    *ngFor="let item of searchItems"
+    *ngFor="let item of searchItems; let i = index"
     [targetStop]="item"
+    [index]="i"
+    cdkDrag
   ></app-search-item>
-  <app-search-item [templateElement]="true"></app-search-item>
+  <app-search-item
+    [templateElement]="true"
+    [index]="2"
+    cdkDrag
+  ></app-search-item>
 </div>

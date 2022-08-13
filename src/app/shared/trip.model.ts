@@ -1,9 +1,5 @@
+import { Leg } from './leg.model';
+
 export class Trip {
-  constructor(
-    public stops: String[],
-    public lines: String[],
-    public arrival: Date,
-    public departure: Date,
-    public arrivalPerStop: Date[]
-  ) {}
+  constructor(public Leg: Leg[]) {}
 }

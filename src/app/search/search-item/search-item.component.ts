@@ -15,19 +15,22 @@ import { Subscription } from 'rxjs';
 export class SearchItemComponent implements OnInit, OnDestroy {
   @Input() targetStop: string = '';
   @Input() templateElement: boolean = false;
-  searchForm: FormGroup;
+  @Input() index!: number;
+  searchForm!: FormGroup;
   patternMatching: Stop[] = [];
 
   subscriptions: Subscription[] = [];
 
-  constructor(private searchService: SearchService) {
-    this.searchForm = new FormGroup({ search: new FormControl(null) });
-  }
+  constructor(private searchService: SearchService) {}
 
   ngOnInit(): void {
+    this.searchForm = new FormGroup({
+      search: new FormControl(this.targetStop),
+    });
+
     this.subscriptions.push(
       this.searchForm.valueChanges.subscribe(({ search }) =>
-        this.searchService.patternMatching(search)
+        this.searchService.patternMatching(search, this.index)
       )
     );
 
@@ -42,10 +45,6 @@ export class SearchItemComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
-
-  dragStartHandler(event: DragEvent): void {}
-
-  dragEndHandler(event: DragEvent): void {}
 
   toggleActive() {
     this.templateElement = !this.templateElement;

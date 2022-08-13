@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SearchComponent } from './search/search-list.component';
 import { SettingsComponent } from './settings/settings.component';
-import { Trip } from './shared/trip.model';
+import { Leg } from './shared/leg.model';
 import { TripListComponent } from './trip-list/trip-list.component';
 
 @Component({
@@ -12,5 +12,5 @@ import { TripListComponent } from './trip-list/trip-list.component';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  trips: Trip[] = [];
+  trips: Leg[][] = [];
 }
