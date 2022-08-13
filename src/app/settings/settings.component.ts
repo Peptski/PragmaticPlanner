@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SearchService } from '../shared/search.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -10,8 +11,11 @@ import { SearchService } from '../shared/search.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent implements OnInit, OnDestroy {
   dateForm: FormGroup;
+  mode = 'departure';
+
+  subscriptions: Subscription[] = [];
 
   constructor(private searchService: SearchService) {
     let date = new Date();
@@ -19,15 +23,39 @@ export class SettingsComponent implements OnInit {
       time: new FormControl(date.toLocaleTimeString().slice(0, -3)),
       date: new FormControl(date.toLocaleDateString()),
     });
+
+    this.subscriptions.push(
+      this.searchService.performSearch.subscribe((_) => this.search())
+    );
   }
 
-  onSubmit() {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.dateForm.valueChanges.subscribe((x) => console.log(x));
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   search() {
-    this.searchService.searchTrip();
+    this.searchService.searchTrip(
+      this.mode,
+      this.dateForm.value.time,
+      this.dateForm.value.date
+    );
+  }
+
+  toggleArrival() {
+    if (this.mode === 'arrival') return;
+    this.mode = 'arrival';
+    document
+      .querySelectorAll('.btn-mode')
+      .forEach((ele) => ele.classList.toggle('active'));
+  }
+
+  toggleDeparture() {
+    if (this.mode === 'departure') return;
+    this.mode = 'departure';
+    document
+      .querySelectorAll('.btn-mode')
+      .forEach((ele) => ele.classList.toggle('active'));
   }
 }

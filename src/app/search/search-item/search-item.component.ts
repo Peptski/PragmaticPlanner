@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { SearchService } from 'src/app/shared/search.service';
@@ -37,7 +43,6 @@ export class SearchItemComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.searchService.searchUpdated.subscribe((patternMatching) => {
         this.patternMatching = patternMatching;
-        console.log(this.patternMatching);
       })
     );
   }
@@ -48,5 +53,9 @@ export class SearchItemComponent implements OnInit, OnDestroy {
 
   toggleActive() {
     this.templateElement = !this.templateElement;
+  }
+
+  search() {
+    this.searchService.performSearch.emit(true);
   }
 }

@@ -13,6 +13,7 @@ export class SearchService {
 
   tripsUpdated = new EventEmitter<Trip[]>();
   searchUpdated = new EventEmitter<Stop[]>();
+  performSearch = new EventEmitter<boolean>();
 
   get trips() {
     return this._trips;
@@ -36,16 +37,20 @@ export class SearchService {
       });
   }
 
-  searchTrip() {
+  searchTrip(mode: string, time: string, date: string) {
     this.http
       .get<{ TripList: { Trip: Trip[] } }>(
-        `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${this._stops[0]}&destId=${this._stops[1]}&format=json`,
+        `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${
+          this._stops[0]
+        }&destId=${this._stops[1]}&date=${date}&time=${time}${
+          mode === 'arrival' ? '&searchForArrival=1' : ''
+        }
+        &format=json`,
         {
           headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
         }
       )
       .subscribe((response) => {
-        console.log(response);
         this._trips = response.TripList.Trip;
         this.tripsUpdated.emit(this.trips);
       });

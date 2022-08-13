@@ -1,10 +1,14 @@
 <div class="settings">
   <div class="mode">
-    <button type="button" class="btn-mode active">Arrival</button>
-    <button type="button" class="btn-mode">Departure</button>
+    <button type="button" class="btn-mode active" (click)="toggleDeparture()">
+      Departure
+    </button>
+    <button type="button" class="btn-mode" (click)="toggleArrival()">
+      Arrival
+    </button>
   </div>
 
-  <form [formGroup]="dateForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="dateForm" (ngSubmit)="search()">
     <input class="time" type="time" formControlName="time" />
     <input class="date" type="date" formControlName="date" />
 
