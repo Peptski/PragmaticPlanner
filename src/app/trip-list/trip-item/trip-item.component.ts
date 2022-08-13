@@ -14,5 +14,7 @@ export class TripItemComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!Array.isArray(this.trip.Leg)) this.trip.Leg = [this.trip.Leg];
+  }
 }

@@ -20,11 +20,16 @@ export class SearchService {
 
   patternMatching(keyword: string, index: number) {
     this.http
-      .get<{ LocationList: { StopLocation: Stop[] } }>(
+      .get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
         `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${keyword}&format=json`,
         { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
       )
       .subscribe((response) => {
+        if (!Array.isArray(response.LocationList.StopLocation))
+          response.LocationList.StopLocation = [
+            response.LocationList.StopLocation,
+          ];
+
         this.searchUpdated.emit(response.LocationList.StopLocation);
         this.setStop(response.LocationList.StopLocation[0].id, index);
         console.log(this._stops);
@@ -40,12 +45,10 @@ export class SearchService {
         }
       )
       .subscribe((response) => {
+        console.log(response);
         this._trips = response.TripList.Trip;
         this.tripsUpdated.emit(this.trips);
       });
-    setTimeout(() => {
-      console.log(this._trips);
-    }, 1000);
   }
 
   setStop(stopId: number, index: number) {
