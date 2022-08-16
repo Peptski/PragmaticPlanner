@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { SearchComponent } from './search/search-list.component';
-import { SettingsComponent } from './settings/settings.component';
-import { Leg } from './shared/leg.model';
-import { TripListComponent } from './trip-list/trip-list.component';
+import { SearchComponent } from './search-page/feature/search/search-list.component';
+import { SettingsComponent } from './search-page/feature/settings/settings.component';
+import { TripListComponent } from './search-page/feature/trip-list/trip-list.component';
+import { Leg } from './search-page/utils/leg.model';
 
 @Component({
   standalone: true,

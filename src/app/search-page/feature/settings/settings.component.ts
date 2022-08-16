@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SearchService } from '../shared/search.service';
 import { Subscription } from 'rxjs';
+import { SearchService } from '../../data-access/search.service';
 
 @Component({
   selector: 'app-settings',

@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchService } from '../shared/search.service';
 import { Subscription } from 'rxjs';
 import { TripItemComponent } from './trip-item/trip-item.component';
-import { Trip } from '../shared/trip.model';
+import { Trip } from '../../utils/trip.model';
+import { SearchService } from '../../data-access/search.service';
 
 @Component({
   selector: 'app-trip-list',

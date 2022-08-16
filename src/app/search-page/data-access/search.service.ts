@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API_ACCESS } from './auth.service';
-import { Stop } from './stop.model';
-import { Trip } from './trip.model';
+import { API_ACCESS } from '../utils/auth.service';
+import { Stop } from '../utils/stop.model';
+import { Trip } from '../utils/trip.model';
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {

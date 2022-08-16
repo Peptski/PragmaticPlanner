@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { SearchService } from 'src/app/shared/search.service';
-import { Stop } from 'src/app/shared/stop.model';
 import { Subscription } from 'rxjs';
+import { Stop } from 'src/app/search-page/utils/stop.model';
+import { SearchService } from 'src/app/search-page/data-access/search.service';
 
 @Component({
   selector: 'app-search-item',

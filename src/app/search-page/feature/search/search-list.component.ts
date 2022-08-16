@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchItemComponent } from './search-item/search-item.component';
 import {
   DragDropModule,
   CdkDragDrop,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { SearchItemComponent } from './search-item/search-item.component';
 
 @Component({
   selector: 'app-search-list',
