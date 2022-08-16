@@ -3,6 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SearchService } from '../../data-access/search.service';
+import { Store } from '@ngrx/store';
+import {
+  buttonSubmit,
+  updateDate,
+  updateTime,
+  updateTimeMode,
+} from '../../data-access/actions/search-page.actions';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +24,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService, private store: Store) {
     let date = new Date();
     this.dateForm = new FormGroup({
       time: new FormControl(date.toLocaleTimeString().slice(0, -3)),
@@ -36,11 +43,25 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   search() {
+    this.store.dispatch(buttonSubmit());
+
     this.searchService.searchTrip(
       this.mode,
       this.dateForm.value.time,
       this.dateForm.value.date
     );
+  }
+
+  updateTime(time: string) {
+    this.store.dispatch(updateTime({ time }));
+  }
+
+  updateDate(date: string) {
+    this.store.dispatch(updateDate({ date }));
+  }
+
+  updateMode(mode: string) {
+    this.store.dispatch(updateTimeMode({ mode }));
   }
 
   toggleArrival() {

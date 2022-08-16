@@ -10,6 +10,11 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Stop } from 'src/app/search-page/utils/stop.model';
 import { SearchService } from 'src/app/search-page/data-access/search.service';
+import { Store } from '@ngrx/store';
+import {
+  enterSubmit,
+  updateSearchParams,
+} from 'src/app/search-page/data-access/actions/search-page.actions';
 
 @Component({
   selector: 'app-search-item',
@@ -27,7 +32,7 @@ export class SearchItemComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  constructor(private searchService: SearchService) {}
+  constructor(private searchService: SearchService, private store: Store) {}
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
@@ -35,9 +40,10 @@ export class SearchItemComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(
-      this.searchForm.valueChanges.subscribe(({ search }) =>
-        this.searchService.patternMatching(search, this.index)
-      )
+      this.searchForm.valueChanges.subscribe(({ search }) => {
+        this.store.dispatch(updateSearchParams({ search }));
+        this.searchService.patternMatching(search, this.index);
+      })
     );
 
     this.subscriptions.push(
@@ -56,6 +62,8 @@ export class SearchItemComponent implements OnInit, OnDestroy {
   }
 
   search() {
+    this.store.dispatch(enterSubmit());
+
     this.searchService.performSearch.emit(true);
   }
 }
