@@ -41,7 +41,6 @@ export class SearchItemComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.searchForm.valueChanges.subscribe(({ search }) => {
-        this.store.dispatch(updateSearchParams({ search }));
         this.searchService.patternMatching(search, this.index);
       })
     );
@@ -65,5 +64,14 @@ export class SearchItemComponent implements OnInit, OnDestroy {
     this.store.dispatch(enterSubmit());
 
     this.searchService.performSearch.emit(true);
+  }
+
+  changeSearchParams(event: Event, index: number) {
+    this.store.dispatch(
+      updateSearchParams({
+        search: (<HTMLTextAreaElement>event.target).value,
+        index: index,
+      })
+    );
   }
 }

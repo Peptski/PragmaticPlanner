@@ -15,7 +15,7 @@ import { SearchItemComponent } from './search-item/search-item.component';
   styleUrls: ['./search-list.component.css'],
 })
 export class SearchComponent implements OnInit {
-  searchItems = ['', ''];
+  searchItems = ['', '', ''];
 
   constructor() {}
 

@@ -52,12 +52,16 @@ export class SettingsComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateTime(time: string) {
-    this.store.dispatch(updateTime({ time }));
+  updateTime(event: Event) {
+    this.store.dispatch(
+      updateTime({ time: (<HTMLTextAreaElement>event.target).value })
+    );
   }
 
-  updateDate(date: string) {
-    this.store.dispatch(updateDate({ date }));
+  updateDate(event: Event) {
+    this.store.dispatch(
+      updateDate({ date: (<HTMLTextAreaElement>event.target).value })
+    );
   }
 
   updateMode(mode: string) {

@@ -1,16 +1,30 @@
 <div class="settings">
   <div class="mode">
-    <button type="button" class="btn-mode active" (click)="toggleDeparture()">
+    <button
+      type="button"
+      class="btn-mode active"
+      (click)="updateMode('departure')"
+    >
       Departure
     </button>
-    <button type="button" class="btn-mode" (click)="toggleArrival()">
+    <button type="button" class="btn-mode" (click)="updateMode('arrival')">
       Arrival
     </button>
   </div>
 
   <form [formGroup]="dateForm" (ngSubmit)="search()">
-    <input class="time" type="time" formControlName="time" />
-    <input class="date" type="date" formControlName="date" />
+    <input
+      class="time"
+      type="time"
+      formControlName="time"
+      (change)="updateTime($event)"
+    />
+    <input
+      class="date"
+      type="date"
+      formControlName="date"
+      (change)="updateDate($event)"
+    />
 
     <button type="submit" class="btn-submit" (click)="search()">Search</button>
   </form>
