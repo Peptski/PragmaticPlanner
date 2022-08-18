@@ -6,6 +6,12 @@ import {
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
 import { SearchItemComponent } from './search-item/search-item.component';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  selectSearchParams,
+  selectTrips,
+} from '../../data-access/reducers/search.reducer';
 
 @Component({
   selector: 'app-search-list',
@@ -14,14 +20,15 @@ import { SearchItemComponent } from './search-item/search-item.component';
   templateUrl: './search-list.component.html',
   styleUrls: ['./search-list.component.css'],
 })
-export class SearchComponent implements OnInit {
-  searchItems = ['', '', ''];
+export class SearchComponent {
+  searchItems$: Observable<string[]>;
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  constructor(private store: Store) {
+    this.searchItems$ = store.select(selectSearchParams);
+  }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.searchItems, event.previousIndex, event.currentIndex);
+    // moveItemInArray(this.searchItems, event.previousIndex, event.currentIndex);
+    //this.searchItem from stream
   }
 }

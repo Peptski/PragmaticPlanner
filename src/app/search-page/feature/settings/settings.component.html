@@ -2,12 +2,19 @@
   <div class="mode">
     <button
       type="button"
-      class="btn-mode active"
+      class="btn-mode"
+      [ngClass]="{ active: (mode$ | async) === 'departure' }"
       (click)="updateMode('departure')"
     >
       Departure
     </button>
-    <button type="button" class="btn-mode" (click)="updateMode('arrival')">
+    <button
+      [value]="mode$ | async"
+      type="button"
+      class="btn-mode"
+      [ngClass]="{ active: (mode$ | async) === 'arrival' }"
+      (click)="updateMode('arrival')"
+    >
       Arrival
     </button>
   </div>

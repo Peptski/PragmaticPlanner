@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TripItemComponent } from './trip-item/trip-item.component';
 import { Trip } from '../../utils/trip.model';
 import { SearchService } from '../../data-access/search.service';
+import { Store } from '@ngrx/store';
+import { selectTrips } from '../../data-access/reducers/search.reducer';
 
 @Component({
   selector: 'app-trip-list',
@@ -12,18 +14,10 @@ import { SearchService } from '../../data-access/search.service';
   templateUrl: './trip-list.component.html',
   styleUrls: ['./trip-list.component.css'],
 })
-export class TripListComponent implements OnInit {
-  @Input() trips: Trip[] = [];
+export class TripListComponent {
+  trips$: Observable<Trip[]>;
 
-  subscriptions: Subscription[] = [];
-
-  constructor(private searchService: SearchService) {
-    this.subscriptions.push(
-      this.searchService.tripsUpdated.subscribe((trips) => (this.trips = trips))
-    );
-  }
-
-  ngOnInit(): void {
-    this.trips = this.searchService.trips;
+  constructor(private searchService: SearchService, private store: Store) {
+    this.trips$ = store.select(selectTrips);
   }
 }

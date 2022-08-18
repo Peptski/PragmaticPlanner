@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SearchService } from '../../data-access/search.service';
 import { Store } from '@ngrx/store';
 import {
@@ -10,6 +10,7 @@ import {
   updateTime,
   updateTimeMode,
 } from '../../data-access/actions/search-page.actions';
+import { selectMode } from '../../data-access/reducers/search.reducer';
 
 @Component({
   selector: 'app-settings',
@@ -18,11 +19,10 @@ import {
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css'],
 })
-export class SettingsComponent implements OnInit, OnDestroy {
+export class SettingsComponent {
   dateForm: FormGroup;
+  mode$: Observable<string>;
   mode = 'departure';
-
-  subscriptions: Subscription[] = [];
 
   constructor(private searchService: SearchService, private store: Store) {
     let date = new Date();
@@ -31,25 +31,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
       date: new FormControl(date.toLocaleDateString()),
     });
 
-    this.subscriptions.push(
-      this.searchService.performSearch.subscribe((_) => this.search())
-    );
-  }
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.mode$ = store.select(selectMode);
   }
 
   search() {
     this.store.dispatch(buttonSubmit());
-
-    this.searchService.searchTrip(
-      this.mode,
-      this.dateForm.value.time,
-      this.dateForm.value.date
-    );
   }
 
   updateTime(event: Event) {
@@ -65,22 +51,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   updateMode(mode: string) {
+    this.mode = mode;
     this.store.dispatch(updateTimeMode({ mode }));
-  }
-
-  toggleArrival() {
-    if (this.mode === 'arrival') return;
-    this.mode = 'arrival';
-    document
-      .querySelectorAll('.btn-mode')
-      .forEach((ele) => ele.classList.toggle('active'));
-  }
-
-  toggleDeparture() {
-    if (this.mode === 'departure') return;
-    this.mode = 'departure';
-    document
-      .querySelectorAll('.btn-mode')
-      .forEach((ele) => ele.classList.toggle('active'));
   }
 }

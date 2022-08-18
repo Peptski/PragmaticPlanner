@@ -38,6 +38,7 @@ export class SearchService {
   }
 
   searchTrip(mode: string, time: string, date: string) {
+    console.log('test');
     this.http
       .get<{ TripList: { Trip: Trip[] } }>(
         `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${

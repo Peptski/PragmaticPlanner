@@ -1,6 +1,16 @@
-import { createReducer, on } from '@ngrx/store';
+import {
+  createFeature,
+  createFeatureSelector,
+  createReducer,
+  createSelector,
+  on,
+} from '@ngrx/store';
 import { Trip } from '../../utils/trip.model';
 import * as SearchPageActions from '../actions/search-page.actions';
+
+export interface AppState {
+  search: State;
+}
 
 export interface State {
   trips: Trip[];
@@ -20,20 +30,20 @@ export const initialState: State = {
   mode: 'arrival',
 };
 
-export const searchReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(SearchPageActions.enterSubmit, SearchPageActions.buttonSubmit, (state) => {
     return {
       ...state,
     };
-    //API call effect
+    //API Call effect
   }),
   on(SearchPageActions.updateSearchParams, (state, action) => {
     return {
       ...state,
-      searchParams: state.searchParams.map((ele, i) =>
-        action.index === i ? action.search : ele
-      ),
+      searchParams: state.searchParams
+        .slice()
+        .map((ele, i) => (action.index === i ? action.search : ele)),
     };
   }),
   on(SearchPageActions.updateTimeMode, (state, action) => {
@@ -54,4 +64,43 @@ export const searchReducer = createReducer(
       date: action.date,
     };
   })
+);
+
+export const selectSearchPageState = createFeatureSelector<State>('search');
+export const selectSearchState = createSelector(
+  selectSearchPageState,
+  (searchPageState) => searchPageState.mode
+);
+
+export const selectMode = createSelector(
+  selectSearchPageState,
+  (state) => state.mode
+);
+export const selectTrips = createSelector(
+  selectSearchPageState,
+  (state) => state.trips
+);
+export const selectSelectedTripId = createSelector(
+  selectSearchPageState,
+  (state) => state.selectedTrip
+);
+export const selectSelectedTrip = createSelector(
+  selectTrips,
+  selectSelectedTripId,
+  (trips, id) => {
+    if (!id) return undefined;
+    return trips[id];
+  }
+);
+export const selectSearchParams = createSelector(
+  selectSearchPageState,
+  (state) => state.searchParams
+);
+export const selectTime = createSelector(
+  selectSearchPageState,
+  (state) => state.time
+);
+export const selectDate = createSelector(
+  selectSearchPageState,
+  (state) => state.date
 );
