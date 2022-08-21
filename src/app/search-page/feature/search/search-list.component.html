@@ -1,6 +1,6 @@
 <div class="search-list" cdkDropList (cdkDropListDropped)="drop($event)">
   <app-search-item
-    *ngFor="let item of searchItems; let i = index"
+    *ngFor="let item of searchItems$ | async; let i = index"
     [targetStop]="item"
     [index]="i"
     cdkDrag

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   DragDropModule,
@@ -8,10 +8,7 @@ import {
 import { SearchItemComponent } from './search-item/search-item.component';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  selectSearchParams,
-  selectTrips,
-} from '../../data-access/reducers/search.reducer';
+import { selectSearchParams } from '../../data-access/reducers/search.reducer';
 
 @Component({
   selector: 'app-search-list',
