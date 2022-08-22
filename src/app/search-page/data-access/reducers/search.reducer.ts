@@ -16,6 +16,7 @@ export interface State {
   trips: Trip[];
   selectedTrip: number | null;
   searchParams: string[];
+  searchPattern: string[][];
   time: string;
   date: string;
   mode: string;
@@ -24,7 +25,12 @@ export interface State {
 export const initialState: State = {
   trips: [],
   selectedTrip: null,
-  searchParams: ['', '', ''],
+  searchParams: ['kapri', 'kungs', ''],
+  searchPattern: [
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+    ['', '', '', '', ''],
+  ],
   time: new Date().toLocaleTimeString().slice(0, -3),
   date: new Date().toLocaleDateString(),
   mode: 'arrival',
@@ -44,6 +50,9 @@ export const reducer = createReducer(
       searchParams: state.searchParams
         .slice()
         .map((ele, i) => (action.index === i ? action.search : ele)),
+      // searchPattern: state.searchPattern
+      //   .slice()
+      //   .map((ele, i) => (action.index === i ? action.search : ele)),
     };
   }),
   on(SearchPageActions.updateTimeMode, (state, action) => {

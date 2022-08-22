@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Stop } from 'src/app/search-page/utils/stop.model';
 import { SearchService } from 'src/app/search-page/data-access/search.service';
 import { Store } from '@ngrx/store';
@@ -9,6 +9,7 @@ import {
   enterSubmit,
   updateSearchParams,
 } from 'src/app/search-page/data-access/actions/search-page.actions';
+import { selectSearchParams } from 'src/app/search-page/data-access/reducers/search.reducer';
 
 @Component({
   selector: 'app-search-item',
@@ -18,9 +19,9 @@ import {
   styleUrls: ['./search-item.component.css'],
 })
 export class SearchItemComponent implements OnInit, OnDestroy {
-  @Input() targetStop: string = '';
-  @Input() templateElement: boolean = false;
+  @Input() targetStop = '';
   @Input() index!: number;
+  templateElement = false;
   searchForm!: FormGroup;
   patternMatching: Stop[] = [];
 
@@ -33,17 +34,23 @@ export class SearchItemComponent implements OnInit, OnDestroy {
       search: new FormControl(this.targetStop),
     });
 
-    this.subscriptions.push(
-      this.searchForm.valueChanges.subscribe(({ search }) => {
-        this.searchService.patternMatching(search, this.index);
-      })
-    );
+    // this.subscriptions.push(
+    //   this.searchForm.valueChanges.subscribe(({ search }) => {
+    //     this.searchService.patternMatching(search, this.index);
+    //     this.store.dispatch(
+    //       updateSearchParams({
+    //         search: search,
+    //         index: this.index,
+    //       })
+    //     );
+    //   })
+    // );
 
-    this.subscriptions.push(
-      this.searchService.searchUpdated.subscribe((patternMatching) => {
-        this.patternMatching = patternMatching;
-      })
-    );
+    // this.subscriptions.push(
+    //   this.searchService.searchUpdated.subscribe((patternMatching) => {
+    //     this.patternMatching = patternMatching;
+    //   })
+    // );
   }
 
   ngOnDestroy(): void {
@@ -56,8 +63,6 @@ export class SearchItemComponent implements OnInit, OnDestroy {
 
   search() {
     this.store.dispatch(enterSubmit());
-
-    this.searchService.performSearch.emit(true);
   }
 
   changeSearchParams(event: Event, index: number) {
