@@ -61,25 +61,13 @@ export class SearchItemComponent implements OnInit {
     this.store.dispatch(enterSubmit());
   }
 
-  changeSearchParams(event: Event, index: number) {
-    this.closePattern();
-    this.store.dispatch(
-      updateSearchParams({
-        search: (<HTMLTextAreaElement>event.target).value,
-        index: index,
-      })
-    );
-  }
-
   setParam(newValue: string) {
-    this.closePattern();
-    console.log(newValue);
-
     this.store.dispatch(
       updateSearchParams({
         search: newValue,
         index: this.index,
       })
     );
+    this.closePattern();
   }
 }

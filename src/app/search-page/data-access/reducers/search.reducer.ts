@@ -1,11 +1,13 @@
+import { ofType } from '@ngrx/effects';
 import {
-  createFeature,
   createFeatureSelector,
   createReducer,
   createSelector,
   on,
 } from '@ngrx/store';
+import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
+import { apiPatternSuccess } from '../actions/search-page-api.actions';
 import * as SearchPageActions from '../actions/search-page.actions';
 
 export interface AppState {
@@ -34,12 +36,26 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  // on(SearchPageActions.enterSubmit, SearchPageActions.buttonSubmit, (state) => {
+  // on(apiTripSuccess, (state) => {
   //   return {
   //     ...state,
   //   };
-  //   //API Call effect
   // }),
+  on(apiPatternSuccess, (state, action) => {
+    console.log(state, action, action.patterns.StopLocation);
+    if (Array.isArray(action.patterns.StopLocation)) {
+      return {
+        ...state,
+        searchPattern: action.patterns.StopLocation.map((ele) => ele.name),
+      };
+    }
+    return {
+      ...state,
+      searchPattern: [<Stop>action.patterns.StopLocation].map(
+        (ele) => ele.name
+      ),
+    };
+  }),
   on(SearchPageActions.updateSearchParams, (state, action) => {
     return {
       ...state,
