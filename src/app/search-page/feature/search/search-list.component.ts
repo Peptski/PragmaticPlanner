@@ -18,7 +18,7 @@ import { selectSearchParams } from '../../data-access/reducers/search.reducer';
   styleUrls: ['./search-list.component.css'],
 })
 export class SearchComponent {
-  searchItems$: Observable<string[]>;
+  searchItems$: Observable<string[][]>;
 
   constructor(private store: Store) {
     this.searchItems$ = store.select(selectSearchParams);

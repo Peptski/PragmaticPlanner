@@ -4,7 +4,7 @@ export const enterSubmit = createAction('[Search Page] Enter submit');
 export const buttonSubmit = createAction('[Search Page] Button submit');
 export const updateSearchParams = createAction(
   '[Search Page] Update search params',
-  props<{ search: string; index: number }>()
+  props<{ name: string; id: string; index: number }>()
 );
 export const updatePatternMatching = createAction(
   '[Search Page] Update pattern matching',

@@ -1,4 +1,3 @@
-import { ofType } from '@ngrx/effects';
 import {
   createFeatureSelector,
   createReducer,
@@ -7,7 +6,11 @@ import {
 } from '@ngrx/store';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
-import { apiPatternSuccess } from '../actions/search-page-api.actions';
+import {
+  apiPatternSuccess,
+  apiTripFail,
+  apiTripSuccess,
+} from '../actions/search-page-api.actions';
 import * as SearchPageActions from '../actions/search-page.actions';
 
 export interface AppState {
@@ -17,8 +20,8 @@ export interface AppState {
 export interface State {
   trips: Trip[];
   selectedTrip: number | null;
-  searchParams: string[];
-  searchPattern: string[];
+  searchParams: [string, string][];
+  searchPattern: [string, string][];
   time: string;
   date: string;
   mode: string;
@@ -27,8 +30,12 @@ export interface State {
 export const initialState: State = {
   trips: [],
   selectedTrip: null,
-  searchParams: ['', '', ''],
-  searchPattern: ['1', '2', '3', '4', '5', '6'],
+  searchParams: [
+    ['', ''],
+    ['', ''],
+    ['', ''],
+  ],
+  searchPattern: [],
   time: new Date().toLocaleTimeString().slice(0, -3),
   date: new Date().toLocaleDateString(),
   mode: 'arrival',
@@ -36,24 +43,28 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  // on(apiTripSuccess, (state) => {
-  //   return {
-  //     ...state,
-  //   };
-  // }),
+  on(apiTripSuccess, (state, action) => {
+    return {
+      ...state,
+      trips: action.trips.TripList.Trip,
+    };
+  }),
   on(apiPatternSuccess, (state, action) => {
-    console.log(state, action, action.patterns.StopLocation);
     if (Array.isArray(action.patterns.StopLocation)) {
       return {
         ...state,
-        searchPattern: action.patterns.StopLocation.map((ele) => ele.name),
+        searchPattern: action.patterns.StopLocation.map((ele) => [
+          ele.name,
+          String(ele.id),
+        ]),
       };
     }
     return {
       ...state,
-      searchPattern: [<Stop>action.patterns.StopLocation].map(
-        (ele) => ele.name
-      ),
+      searchPattern: [<Stop>action.patterns.StopLocation].map((ele) => [
+        ele.name,
+        String(ele.id),
+      ]),
     };
   }),
   on(SearchPageActions.updateSearchParams, (state, action) => {
@@ -61,7 +72,9 @@ export const reducer = createReducer(
       ...state,
       searchParams: state.searchParams
         .slice()
-        .map((ele, i) => (action.index === i ? action.search : ele)),
+        .map((ele, i) =>
+          action.index === i ? [action.name, String(action.id)] : ele
+        ),
       searchPattern: [],
     };
   }),
@@ -95,14 +108,17 @@ export const selectMode = createSelector(
   selectSearchPageState,
   (state) => state.mode
 );
+
 export const selectTrips = createSelector(
   selectSearchPageState,
   (state) => state.trips
 );
+
 export const selectSelectedTripId = createSelector(
   selectSearchPageState,
   (state) => state.selectedTrip
 );
+
 export const selectSelectedTrip = createSelector(
   selectTrips,
   selectSelectedTripId,
@@ -111,19 +127,34 @@ export const selectSelectedTrip = createSelector(
     return trips[id];
   }
 );
+
 export const selectSearchParams = createSelector(
   selectSearchPageState,
   (state) => state.searchParams
 );
+
 export const selectPatternMatching = createSelector(
   selectSearchPageState,
   (state) => state.searchPattern
 );
+
 export const selectTime = createSelector(
   selectSearchPageState,
   (state) => state.time
 );
+
 export const selectDate = createSelector(
   selectSearchPageState,
   (state) => state.date
+);
+
+export const selectSearchData = createSelector(
+  selectSearchPageState,
+  (state) => [
+    state.mode,
+    state.time,
+    state.date,
+    state.searchParams[0][1],
+    state.searchParams[1][1],
+  ]
 );

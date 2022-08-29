@@ -1,15 +1,13 @@
 .trip {
   margin: 0.4rem;
   background-color: #ddd;
-  display: flex;
-  justify-content: space-around;
   border-radius: 12px;
 }
 
 .container {
   display: flex;
-  flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   margin: 0.5rem 0;
   gap: 0.5rem;
 }

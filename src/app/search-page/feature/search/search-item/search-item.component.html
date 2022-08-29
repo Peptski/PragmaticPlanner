@@ -29,12 +29,12 @@
 <div *ngIf="pattern">
   <button
     class="container"
-    *ngFor="let pattern of patternMatching$ | async; let i = index"
+    *ngFor="let item of patternMatching$ | async; let i = index"
     [style]="'top:' + (3.2 + 2.5 * i) + 'rem'"
-    (click)="setParam(pattern)"
+    (click)="setParam(item[0], item[1])"
   >
     <span>
-      {{ pattern }}
+      {{ item[0] }}
     </span>
   </button>
 </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { concatMap, map, withLatestFrom } from 'rxjs';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
 import {
@@ -12,29 +13,29 @@ import {
   enterSubmit,
   updatePatternMatching,
 } from '../actions/search-page.actions';
+import { selectSearchData } from '../reducers/search.reducer';
 import { SearchService } from '../search.service';
 
 @Injectable()
 export class SearchApiEffects {
   constructor(
     private searchService: SearchService,
-    private actions$: Actions
+    private actions$: Actions,
+    private store: Store
   ) {}
 
   loadSearch$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(buttonSubmit),
-      concatMap((action) => {
-        return (
-          this.searchService
-            //TDO data from submits
-            .searchTrip('', '', '', '', '')
-            .pipe(
-              map((data: { TripList: { Trip: Trip[] } }) =>
-                apiTripSuccess({ trips: data })
-              )
+      ofType(buttonSubmit, enterSubmit),
+      withLatestFrom(this.store.select(selectSearchData)),
+      concatMap(([_, [mode, time, date, from, to]]) => {
+        return this.searchService
+          .searchTrip(mode, time, date, from, to)
+          .pipe(
+            map((data: { TripList: { Trip: Trip[] } }) =>
+              apiTripSuccess({ trips: data })
             )
-        );
+          );
       })
     );
   });

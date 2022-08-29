@@ -1,21 +1,14 @@
 <div class="trip" [style.height]="3 * trip.Leg.length + 1 + 'rem'">
-  <div class="container">
-    <span *ngFor="let leg of trip.Leg" class="stop-item"
-      >{{ leg.Origin.name }} - {{ leg.Destination.name }}
-    </span>
-  </div>
-
-  <div class="container">
-    <span *ngFor="let leg of trip.Leg" class="line-item">{{ leg.sname }} </span>
-  </div>
-
-  <div class="container">
-    <span *ngFor="let leg of trip.Leg" class="arrival-item">
-      {{ leg.Destination.time }}</span
+  <div class="container" *ngFor="let leg of trip.Leg">
+    <span class="stop-item"
+      >{{ leg.Origin.name }} - {{ leg.Destination.name }}</span
     >
-  </div>
 
-  <div class="icon">
-    <i class="ph-caret-down"></i>
+    <span class="line-item">{{ leg.sname }}</span>
+
+    <span class="arrival-item">{{ leg.Destination.time }}</span>
+    <div class="icon">
+      <i class="ph-caret-down"></i>
+    </div>
   </div>
 </div>

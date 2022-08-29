@@ -7,7 +7,10 @@ import {
   updatePatternMatching,
   updateSearchParams,
 } from 'src/app/search-page/data-access/actions/search-page.actions';
-import { selectPatternMatching } from 'src/app/search-page/data-access/reducers/search.reducer';
+import {
+  selectPatternMatching,
+  selectSearchData,
+} from 'src/app/search-page/data-access/reducers/search.reducer';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -23,7 +26,8 @@ export class SearchItemComponent implements OnInit {
   pattern = false;
   templateElement = false;
   searchForm!: FormGroup;
-  patternMatching$: Observable<string[]>;
+
+  patternMatching$: Observable<string[][]>;
 
   constructor(private store: Store) {
     this.patternMatching$ = store.select(selectPatternMatching);
@@ -61,13 +65,15 @@ export class SearchItemComponent implements OnInit {
     this.store.dispatch(enterSubmit());
   }
 
-  setParam(newValue: string) {
+  setParam(name: string, id: string) {
     this.store.dispatch(
       updateSearchParams({
-        search: newValue,
+        name: name,
+        id: String(id),
         index: this.index,
       })
     );
+    console.log(this.targetStop);
     this.closePattern();
   }
 }
