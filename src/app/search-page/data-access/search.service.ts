@@ -39,22 +39,17 @@ export class SearchService {
 
   searchTrip(mode: string, time: string, date: string) {
     console.log('test');
-    this.http
-      .get<{ TripList: { Trip: Trip[] } }>(
-        `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${
-          this._stops[0]
-        }&destId=${this._stops[1]}&date=${date}&time=${time}${
-          mode === 'arrival' ? '&searchForArrival=1' : ''
-        }
+    return this.http.get<{ TripList: { Trip: Trip[] } }>(
+      `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${
+        this._stops[0]
+      }&destId=${this._stops[1]}&date=${date}&time=${time}${
+        mode === 'arrival' ? '&searchForArrival=1' : ''
+      }
         &format=json`,
-        {
-          headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
-        }
-      )
-      .subscribe((response) => {
-        this._trips = response.TripList.Trip;
-        this.tripsUpdated.emit(this.trips);
-      });
+      {
+        headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
+      }
+    );
   }
 
   setStop(stopId: number, index: number) {

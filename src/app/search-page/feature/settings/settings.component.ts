@@ -1,7 +1,7 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SearchService } from '../../data-access/search.service';
 import { Store } from '@ngrx/store';
 import {
@@ -20,9 +20,8 @@ import { selectMode } from '../../data-access/reducers/search.reducer';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent {
-  dateForm: FormGroup;
   mode$: Observable<string>;
-  mode = 'departure';
+  dateForm: FormGroup;
 
   constructor(private searchService: SearchService, private store: Store) {
     let date = new Date();
@@ -35,6 +34,7 @@ export class SettingsComponent {
   }
 
   search() {
+    //TODO Send data as prop?
     this.store.dispatch(buttonSubmit());
   }
 
@@ -51,7 +51,6 @@ export class SettingsComponent {
   }
 
   updateMode(mode: string) {
-    this.mode = mode;
     this.store.dispatch(updateTimeMode({ mode }));
   }
 }
