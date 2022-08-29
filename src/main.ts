@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
 import { reducer } from './app/search-page/data-access/reducers/search.reducer';
+// import { EffectsModule } from '@ngrx/effects';
+// import { SearchApiEffects } from './app/search-page/data-access/effects/search-api.effects';
 
 if (environment.production) {
   enableProdMode();
@@ -18,6 +20,7 @@ bootstrapApplication(AppComponent, {
       AppRoutingModule,
       HttpClientModule,
       StoreModule.forRoot({ search: reducer }),
+      // EffectsModule.forRoot([SearchApiEffects]),
       StoreDevtoolsModule.instrument({
         maxAge: 25,
       })
