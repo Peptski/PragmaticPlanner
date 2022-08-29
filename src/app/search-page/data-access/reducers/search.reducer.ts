@@ -16,7 +16,7 @@ export interface State {
   trips: Trip[];
   selectedTrip: number | null;
   searchParams: string[];
-  searchPattern: string[][];
+  searchPattern: string[];
   time: string;
   date: string;
   mode: string;
@@ -25,12 +25,8 @@ export interface State {
 export const initialState: State = {
   trips: [],
   selectedTrip: null,
-  searchParams: ['kapri', 'kungs', ''],
-  searchPattern: [
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-    ['', '', '', '', ''],
-  ],
+  searchParams: ['', '', ''],
+  searchPattern: ['1', '2', '3', '4', '5', '6'],
   time: new Date().toLocaleTimeString().slice(0, -3),
   date: new Date().toLocaleDateString(),
   mode: 'arrival',
@@ -104,6 +100,10 @@ export const selectSelectedTrip = createSelector(
 export const selectSearchParams = createSelector(
   selectSearchPageState,
   (state) => state.searchParams
+);
+export const selectPatternMatching = createSelector(
+  selectSearchPageState,
+  (state) => state.searchPattern
 );
 export const selectTime = createSelector(
   selectSearchPageState,

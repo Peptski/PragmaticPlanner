@@ -6,6 +6,10 @@ export const updateSearchParams = createAction(
   '[Search Page] Update search params',
   props<{ search: string; index: number }>()
 );
+export const updatePatternMatching = createAction(
+  '[Search Page] Update pattern matching',
+  props<{ search: string; index: number }>()
+);
 export const updateTimeMode = createAction(
   '[Search Page] Update time mode',
   props<{ mode: string }>()

@@ -13,6 +13,8 @@
         formControlName="search"
         [value]="targetStop"
         (change)="changeSearchParams($event, index)"
+        (focus)="togglePattern()"
+        (blur)="togglePattern()"
       />
     </form>
   </div>
@@ -23,5 +25,16 @@
       (click)="toggleActive()"
       [ngClass]="{ transformed: templateElement }"
     ></i>
+  </div>
+</div>
+<div *ngIf="pattern">
+  <div
+    class="container"
+    *ngFor="let pattern of patternMatching$ | async; let i = index"
+    [style]="'top:' + (3.2 + 2.5 * i) + 'rem'"
+  >
+    <span>
+      {{ pattern }}
+    </span>
   </div>
 </div>

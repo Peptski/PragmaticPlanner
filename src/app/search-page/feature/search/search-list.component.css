@@ -3,6 +3,11 @@
   flex-direction: column;
 }
 
+app-search-item {
+  height: 4.4rem;
+  position: relative;
+}
+
 .cdk-drag-preview {
 }
 
