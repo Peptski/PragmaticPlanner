@@ -35,18 +35,22 @@ export class SearchItemComponent implements OnInit {
     });
 
     this.searchForm.valueChanges.subscribe((data) => {
-      console.log(this.index);
       this.store.dispatch(
         updatePatternMatching({
           search: data.search,
-          index: this.index,
         })
       );
     });
   }
 
-  togglePattern() {
+  openPattern() {
     this.pattern = !this.pattern;
+  }
+
+  closePattern() {
+    setTimeout(() => {
+      this.pattern = false;
+    }, 150);
   }
 
   toggleActive() {
@@ -58,10 +62,23 @@ export class SearchItemComponent implements OnInit {
   }
 
   changeSearchParams(event: Event, index: number) {
+    this.closePattern();
     this.store.dispatch(
       updateSearchParams({
         search: (<HTMLTextAreaElement>event.target).value,
         index: index,
+      })
+    );
+  }
+
+  setParam(newValue: string) {
+    this.closePattern();
+    console.log(newValue);
+
+    this.store.dispatch(
+      updateSearchParams({
+        search: newValue,
+        index: this.index,
       })
     );
   }

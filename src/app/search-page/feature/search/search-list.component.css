@@ -8,8 +8,8 @@ app-search-item {
   position: relative;
 }
 
-.cdk-drag-preview {
-}
+/* .cdk-drag-preview {
+} */
 
 .cdk-drag-placeholder {
   opacity: 0;

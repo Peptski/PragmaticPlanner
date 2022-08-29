@@ -8,41 +8,23 @@ import { Trip } from '../utils/trip.model';
 export class SearchService {
   constructor(private http: HttpClient) {}
 
-  _stops: number[] = [];
-  _trips: Trip[] = [];
-
-  tripsUpdated = new EventEmitter<Trip[]>();
-  searchUpdated = new EventEmitter<Stop[]>();
-  performSearch = new EventEmitter<boolean>();
-
-  get trips() {
-    return this._trips;
+  patternMatching(keyword: string) {
+    return this.http.get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
+      `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${keyword}&format=json`,
+      { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
+    );
   }
 
-  patternMatching(keyword: string, index: number) {
-    this.http
-      .get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
-        `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${keyword}&format=json`,
-        { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
-      )
-      .subscribe((response) => {
-        if (!Array.isArray(response.LocationList.StopLocation))
-          response.LocationList.StopLocation = [
-            response.LocationList.StopLocation,
-          ];
-
-        this.searchUpdated.emit(response.LocationList.StopLocation);
-        this.setStop(response.LocationList.StopLocation[0].id, index);
-        console.log(this._stops);
-      });
-  }
-
-  searchTrip(mode: string, time: string, date: string) {
+  searchTrip(
+    mode: string,
+    time: string,
+    date: string,
+    from: string,
+    to: string
+  ) {
     console.log('test');
     return this.http.get<{ TripList: { Trip: Trip[] } }>(
-      `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${
-        this._stops[0]
-      }&destId=${this._stops[1]}&date=${date}&time=${time}${
+      `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${from}&destId=${to}&date=${date}&time=${time}${
         mode === 'arrival' ? '&searchForArrival=1' : ''
       }
         &format=json`,
@@ -50,9 +32,5 @@ export class SearchService {
         headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
       }
     );
-  }
-
-  setStop(stopId: number, index: number) {
-    this._stops[index] = stopId;
   }
 }

@@ -8,7 +8,7 @@ export const updateSearchParams = createAction(
 );
 export const updatePatternMatching = createAction(
   '[Search Page] Update pattern matching',
-  props<{ search: string; index: number }>()
+  props<{ search: string }>()
 );
 export const updateTimeMode = createAction(
   '[Search Page] Update time mode',

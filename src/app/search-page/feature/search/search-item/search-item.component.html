@@ -13,8 +13,8 @@
         formControlName="search"
         [value]="targetStop"
         (change)="changeSearchParams($event, index)"
-        (focus)="togglePattern()"
-        (blur)="togglePattern()"
+        (focus)="openPattern()"
+        (blur)="closePattern()"
       />
     </form>
   </div>
@@ -28,13 +28,14 @@
   </div>
 </div>
 <div *ngIf="pattern">
-  <div
+  <button
     class="container"
     *ngFor="let pattern of patternMatching$ | async; let i = index"
     [style]="'top:' + (3.2 + 2.5 * i) + 'rem'"
+    (click)="setParam(pattern)"
   >
     <span>
       {{ pattern }}
     </span>
-  </div>
+  </button>
 </div>

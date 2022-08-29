@@ -34,21 +34,19 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(SearchPageActions.enterSubmit, SearchPageActions.buttonSubmit, (state) => {
-    return {
-      ...state,
-    };
-    //API Call effect
-  }),
+  // on(SearchPageActions.enterSubmit, SearchPageActions.buttonSubmit, (state) => {
+  //   return {
+  //     ...state,
+  //   };
+  //   //API Call effect
+  // }),
   on(SearchPageActions.updateSearchParams, (state, action) => {
     return {
       ...state,
       searchParams: state.searchParams
         .slice()
         .map((ele, i) => (action.index === i ? action.search : ele)),
-      // searchPattern: state.searchPattern
-      //   .slice()
-      //   .map((ele, i) => (action.index === i ? action.search : ele)),
+      searchPattern: [],
     };
   }),
   on(SearchPageActions.updateTimeMode, (state, action) => {
