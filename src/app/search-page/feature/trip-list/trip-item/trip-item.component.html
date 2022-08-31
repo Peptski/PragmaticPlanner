@@ -3,13 +3,19 @@
     <span class="origin-item">{{ (trip.Leg | forcelist)[0].Origin.name }}</span>
 
     <div class="lines">
-      <span class="line-item" *ngFor="let leg of trip.Leg | forcelist">{{
-        leg.sname
-      }}</span>
+      <span
+        class="line-item"
+        *ngFor="let leg of trip.Leg | forcelist"
+        [style.color]="leg.fgColor"
+        [style.backgroundColor]="leg.bgColor"
+        >{{ leg.sname }}
+        <i *ngIf="leg.type === 'WALK'" class="ph-person-simple-walk"></i
+      ></span>
     </div>
 
     <div class="time">
       <span class="time-item">{{ (trip.Leg | forcelist)[0].Origin.time }}</span>
+      <span> - </span>
       <span class="time-item">{{
         (trip.Leg | forcelist)[(trip.Leg | forcelist).length - 1].Destination
           .time
