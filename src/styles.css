@@ -5,3 +5,13 @@
   font-family: "Inter", sans-serif;
   border: none;
 }
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: #1e293b;
+}

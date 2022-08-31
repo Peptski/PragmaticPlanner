@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_ACCESS } from '../utils/auth.service';
 import { Stop } from '../utils/stop.model';
@@ -20,16 +20,16 @@ export class SearchService {
     time: string,
     date: string,
     from: string,
+    via: string,
     to: string
   ) {
-    return this.http.get<{ TripList: { Trip: Trip[] } }>(
-      `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${from}&destId=${to}&date=${date}&time=${time}${
-        mode === 'arrival' ? '&searchForArrival=1' : ''
-      }
-        &format=json`,
-      {
-        headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
-      }
-    );
+    let query = 'https://api.vasttrafik.se/bin/rest.exe/v2/trip';
+    query += `?originId=${from}&destId=${to}&date=${date}&time=${time}&format=json`;
+    if (via !== '') query += `&viaId=${via}`;
+    if (mode === 'arrival') query += '&searchForArrival=1';
+
+    return this.http.get<{ TripList: { Trip: Trip[] } }>(query, {
+      headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
+    });
   }
 }

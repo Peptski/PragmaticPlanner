@@ -1,6 +1,6 @@
 .settings {
   height: 5rem;
-  background-color: #ccc;
+  background-color: #475569;
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -22,29 +22,29 @@
 .btn-mode {
   height: 100%;
   width: 100%;
-  background-color: #eee;
+  background-color: #cbd5e1;
+  color: #1e293b;
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .btn-mode.active {
-  background-color: #bbb;
+  background-color: #94a3b8;
 }
 
 .date {
-  height: 2rem;
-  border-radius: 12px;
   width: 10rem;
 }
 
 .time {
-  height: 2rem;
-  border-radius: 12px;
   width: 6rem;
 }
 
 .time,
 .date {
+  color: #1e293b;
+  height: 2rem;
+  border-radius: 12px;
   font-size: 1.2rem;
   text-align: center;
   font-weight: 500;
@@ -55,6 +55,13 @@
   border-radius: 12px;
   font-size: 1.2rem;
   font-weight: 700;
+  color: #1e293b;
+  background-color: #cbd5e1;
+}
+
+.btn-submit:hover {
+  background-color: #1e293b;
+  color: #cbd5e1;
 }
 
 form {

@@ -156,5 +156,6 @@ export const selectSearchData = createSelector(
     state.date,
     state.searchParams[0][1],
     state.searchParams[1][1],
+    state.searchParams[2][1],
   ]
 );

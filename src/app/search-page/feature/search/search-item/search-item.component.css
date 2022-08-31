@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: center;
   height: 4rem;
-  background-color: #ddd;
+  background-color: #475569;
   border-radius: 12px;
   margin: 0.4rem 0.4rem 0 0.4rem;
 }
@@ -15,6 +15,10 @@
 .title {
   display: flex;
   align-items: center;
+}
+
+i {
+  color: #1e293b;
 }
 
 .icon {
@@ -31,7 +35,7 @@
 }
 
 .clickable {
-  background-color: #ccc;
+  background-color: #cbd5e1;
 }
 
 input {
@@ -44,7 +48,7 @@ input {
 }
 
 .template {
-  background-color: rgba(222, 222, 222, 0.2);
+  background-color: rgba(71, 85, 105, 0.2);
 }
 
 .template input {
@@ -61,18 +65,16 @@ input {
   top: 3.2rem;
   left: 4.4rem;
   z-index: 2;
-  background-color: #888;
-
+  background-color: #64748b;
   display: flex;
   align-items: center;
-
   width: 20rem;
   height: 2.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   padding-left: 1rem;
 }
 
 .container:hover {
-  background-color: #999;
+  background-color: #94a3b8;
 }

@@ -1,6 +1,8 @@
 <div class="trip">
   <div class="container">
-    <span class="origin-item">{{ (trip.Leg | forcelist)[0].Origin.name }}</span>
+    <span class="origin-item">{{
+      (trip.Leg | forcelist)[0].Origin.name.split(",")[0]
+    }}</span>
 
     <div class="lines">
       <span
