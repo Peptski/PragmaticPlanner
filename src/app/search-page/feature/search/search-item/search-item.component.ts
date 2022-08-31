@@ -73,7 +73,6 @@ export class SearchItemComponent implements OnInit {
         index: this.index,
       })
     );
-    console.log(this.targetStop);
     this.closePattern();
   }
 }

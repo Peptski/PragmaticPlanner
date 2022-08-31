@@ -22,7 +22,6 @@ export class SearchService {
     from: string,
     to: string
   ) {
-    console.log(mode, time, date, from, to);
     return this.http.get<{ TripList: { Trip: Trip[] } }>(
       `https://api.vasttrafik.se/bin/rest.exe/v2/trip?originId=${from}&destId=${to}&date=${date}&time=${time}${
         mode === 'arrival' ? '&searchForArrival=1' : ''
