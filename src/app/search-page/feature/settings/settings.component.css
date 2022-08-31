@@ -5,7 +5,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.4rem;
   margin: 0.4rem;
 }
 
@@ -17,6 +16,7 @@
   height: 3.5rem;
   border-radius: 12px;
   width: 8rem;
+  margin-right: 2rem;
 }
 
 .btn-mode {
@@ -29,7 +29,8 @@
 }
 
 .btn-mode.active {
-  background-color: #94a3b8;
+  background-color: #1e293b;
+  color: #cbd5e1;
 }
 
 .date {
@@ -67,5 +68,5 @@
 form {
   display: flex;
   align-items: center;
-  gap: 1.4rem;
+  gap: 2rem;
 }

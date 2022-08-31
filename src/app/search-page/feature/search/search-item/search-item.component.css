@@ -18,7 +18,7 @@
 }
 
 i {
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .icon {
@@ -36,6 +36,10 @@ i {
 
 .clickable {
   background-color: #cbd5e1;
+}
+
+.clickable:hover {
+  background-color: #94a3b8;
 }
 
 input {
