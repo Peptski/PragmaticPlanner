@@ -10,6 +10,7 @@
   background-color: #475569;
   border-radius: 12px;
   margin: 0.4rem 0.4rem 0 0.4rem;
+  width: 40rem;
 }
 
 .title {
@@ -66,8 +67,7 @@ input {
 
 .container {
   position: absolute;
-  top: 3.2rem;
-  left: 4.4rem;
+  left: 19rem;
   z-index: 2;
   background-color: #64748b;
   display: flex;
