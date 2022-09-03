@@ -25,7 +25,13 @@
     </div>
 
     <div class="icon">
-      <i class="ph-caret-down"></i>
+      <i
+        class="ph-caret-down"
+        [ngClass]="{ active: open }"
+        (click)="handleDetails()"
+      ></i>
     </div>
   </div>
 </div>
+
+<app-trip-details *ngIf="open" [details]="details"></app-trip-details>

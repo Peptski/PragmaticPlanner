@@ -1,6 +1,6 @@
 <div class="list">
   <app-trip-item
-    *ngFor="let trip of trips$ | async"
+    *ngFor="let trip of trips$ | async; let i = index"
     [trip]="trip"
   ></app-trip-item>
 </div>

@@ -6,7 +6,9 @@ import { Trip } from '../utils/trip.model';
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.detailTest();
+  }
 
   patternMatching(keyword: string) {
     return this.http.get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
@@ -31,5 +33,27 @@ export class SearchService {
     return this.http.get<{ TripList: { Trip: Trip[] } }>(query, {
       headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
     });
+  }
+
+  getDetails(url: string) {
+    return this.http.get<{ JourneyDetail: { Stop: Stop[] } }>(url, {
+      headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
+    });
+  }
+
+  detailTest() {
+    this.http
+      .get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
+        `https://api.vasttrafik.se/bin/rest.exe/v2/journeyDetail?ref=627375%2F248720%2F167368%2F125441%2F80%3Fdate%3D2022-09-03%26station_evaId%3D9620013%26station_type%3Ddep%26format%3Djson%26`,
+        { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
+      )
+      .subscribe((res) => console.log(res));
+
+    this.http
+      .get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
+        `https://api.vasttrafik.se/bin/rest.exe/v2/journeyDetail?ref=251271%2F86585%2F414416%2F123451%2F80%3Fdate%3D2022-09-03%26station_evaId%3D3770001%26station_type%3Ddep%26format%3Djson%26`,
+        { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
+      )
+      .subscribe((res) => console.log(res));
   }
 }

@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ForceListPipe } from 'src/app/search-page/utils/force-list.pipe';
+import { Observable } from 'rxjs';
+import { Stop } from 'src/app/search-page/utils/stop.model';
 
 @Component({
   selector: 'app-trip-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ForceListPipe],
   templateUrl: './trip-details.component.html',
-  styleUrls: ['./trip-details.component.css']
+  styleUrls: ['./trip-details.component.css'],
 })
-export class TripDetailsComponent implements OnInit {
+export class TripDetailsComponent {
+  @Input() details!: Stop[][];
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  constructor() {}
 }

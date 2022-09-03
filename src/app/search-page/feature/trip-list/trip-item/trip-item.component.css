@@ -42,12 +42,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: 0.3s;
 }
 
 .icon i {
   font-size: 2rem;
   padding: 0.2rem;
   border-radius: 50%;
-  background-color: #cbd5e1;
+  background-color: #94a3b8;
   color: #0f172a;
+}
+
+.icon i:hover {
+  background-color: #0f172a;
+  color: #94a3b8;
+}
+
+.active {
+  transform: rotate(180deg);
 }
