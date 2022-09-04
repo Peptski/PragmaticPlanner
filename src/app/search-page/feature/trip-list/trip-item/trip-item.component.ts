@@ -26,13 +26,17 @@ export class TripItemComponent {
       this.open = false;
     } else {
       if (this.details.length === 0) {
-        this.trip.Leg.forEach((leg) => {
+        const legs = Array.isArray(this.trip.Leg)
+          ? this.trip.Leg
+          : [this.trip.Leg];
+        console.log('test');
+
+        legs.forEach((leg) => {
           if (leg.type !== 'WALK') {
             const sub = this.searchService
               .getDetails(leg.JourneyDetailRef.ref)
               .subscribe((data) => {
-                console.log(data, data.JourneyDetail.Stop);
-                //this.details.push = data.JourneyDetail.Stop;
+                this.details.push(data.JourneyDetail.Stop);
                 sub.unsubscribe();
               });
           }
