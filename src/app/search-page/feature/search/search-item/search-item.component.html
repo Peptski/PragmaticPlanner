@@ -1,12 +1,5 @@
 <div class="search-item" [ngClass]="{ template: templateElement }">
   <div class="title">
-    <div class="icon">
-      <i
-        class="ph-arrows-out-cardinal"
-        [style.opacity]="templateElement ? 0 : 1"
-      ></i>
-    </div>
-
     <form [formGroup]="searchForm" (ngSubmit)="search()">
       <input
         type="text"
@@ -18,23 +11,28 @@
     </form>
   </div>
 
-  <div class="icon">
+  <div class="icon" *ngIf="index == 0">
+    <i class="ph-swap clickable" (click)="swap()"></i>
+  </div>
+
+  <div class="icon" *ngIf="index == 1">
     <i
       class="ph-x clickable"
       (click)="toggleActive()"
       [ngClass]="{ transformed: templateElement }"
     ></i>
   </div>
-</div>
-<div *ngIf="pattern">
-  <button
-    class="container"
-    *ngFor="let item of patternMatching$ | async; let i = index"
-    [style]="'top:' + (3.2 + 2.5 * i) + 'rem'"
-    (click)="setParam(item[0], item[1])"
-  >
-    <span>
-      {{ item[0] }}
-    </span>
-  </button>
+
+  <div *ngIf="pattern">
+    <button
+      class="container"
+      *ngFor="let item of patternMatching$ | async; let i = index"
+      [style]="'top:' + (3.2 + 2.5 * i) + 'rem'"
+      (click)="setParam(item[0], item[1])"
+    >
+      <span>
+        {{ item[0] }}
+      </span>
+    </button>
+  </div>
 </div>

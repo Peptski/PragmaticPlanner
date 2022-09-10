@@ -29,7 +29,6 @@ export class TripItemComponent {
         const legs = Array.isArray(this.trip.Leg)
           ? this.trip.Leg
           : [this.trip.Leg];
-        console.log('test');
 
         legs.forEach((leg) => {
           if (leg.type !== 'WALK') {

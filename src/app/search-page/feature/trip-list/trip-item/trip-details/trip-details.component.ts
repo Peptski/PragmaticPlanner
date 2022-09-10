@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForceListPipe } from 'src/app/search-page/utils/force-list.pipe';
-import { Observable } from 'rxjs';
 import { Stop } from 'src/app/search-page/utils/stop.model';
 
 @Component({
@@ -13,6 +12,7 @@ import { Stop } from 'src/app/search-page/utils/stop.model';
 })
 export class TripDetailsComponent {
   @Input() details!: Stop[][];
-
-  constructor() {}
+  constructor() {
+    console.log(this.details);
+  }
 }

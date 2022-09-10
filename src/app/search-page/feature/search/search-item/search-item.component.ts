@@ -7,10 +7,7 @@ import {
   updatePatternMatching,
   updateSearchParams,
 } from 'src/app/search-page/data-access/actions/search-page.actions';
-import {
-  selectPatternMatching,
-  selectSearchData,
-} from 'src/app/search-page/data-access/reducers/search.reducer';
+import { selectPatternMatching } from 'src/app/search-page/data-access/reducers/search.reducer';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -35,7 +32,10 @@ export class SearchItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = new FormGroup({
-      search: new FormControl(this.targetStop),
+      search: new FormControl({
+        value: this.targetStop,
+        disabled: this.index == 1,
+      }),
     });
 
     this.searchForm.valueChanges.subscribe((data) => {
@@ -45,6 +45,8 @@ export class SearchItemComponent implements OnInit {
         })
       );
     });
+
+    if (this.index == 1) this.toggleActive();
   }
 
   openPattern() {
@@ -58,7 +60,13 @@ export class SearchItemComponent implements OnInit {
   }
 
   toggleActive() {
-    this.templateElement = !this.templateElement;
+    if (this.templateElement) {
+      this.templateElement = false;
+      this.searchForm.enable();
+    } else {
+      this.templateElement = true;
+      this.searchForm.disable();
+    }
   }
 
   search() {
@@ -75,4 +83,6 @@ export class SearchItemComponent implements OnInit {
     );
     this.closePattern();
   }
+
+  swap() {}
 }
