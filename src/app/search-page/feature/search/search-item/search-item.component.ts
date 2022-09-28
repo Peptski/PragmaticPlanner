@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import {
   enterSubmit,
+  swapDestOrigin,
   toggleExtraStop,
   updatePatternMatching,
   updateSearchParams,
@@ -86,5 +87,7 @@ export class SearchItemComponent implements OnInit {
     this.closePattern();
   }
 
-  swap() {}
+  swap() {
+    this.store.dispatch(swapDestOrigin());
+  }
 }

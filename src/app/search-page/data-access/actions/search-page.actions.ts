@@ -26,3 +26,4 @@ export const toggleExtraStop = createAction(
   '[Search Page] Toggle extra stop',
   props<{ mode: boolean }>()
 );
+export const swapDestOrigin = createAction('[Search Page] Swap dest/origin');

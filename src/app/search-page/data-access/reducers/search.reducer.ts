@@ -1,3 +1,4 @@
+import { state } from '@angular/animations';
 import {
   createFeatureSelector,
   createReducer,
@@ -102,6 +103,12 @@ export const reducer = createReducer(
     return {
       ...state,
       extraStop: action.mode,
+    };
+  }),
+  on(SearchPageActions.swapDestOrigin, (state, action) => {
+    return {
+      ...state,
+      searchParams: state.searchParams.slice().reverse(),
     };
   })
 );
