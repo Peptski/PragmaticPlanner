@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ForceListPipe } from 'src/app/search-page/utils/force-list.pipe';
-import { Stop } from 'src/app/search-page/utils/stop.model';
+import { Detail } from 'src/app/search-page/utils/detail.model';
 
 @Component({
   selector: 'app-trip-details',
@@ -11,8 +11,6 @@ import { Stop } from 'src/app/search-page/utils/stop.model';
   styleUrls: ['./trip-details.component.css'],
 })
 export class TripDetailsComponent {
-  @Input() details!: Stop[][];
-  constructor() {
-    console.log(this.details);
-  }
+  @Input() details!: Detail[];
+  constructor() {}
 }

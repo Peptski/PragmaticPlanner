@@ -3,12 +3,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_ACCESS } from '../utils/auth.service';
 import { Stop } from '../utils/stop.model';
 import { Trip } from '../utils/trip.model';
+import { Detail } from '../utils/detail.model';
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-  constructor(private http: HttpClient) {
-    this.detailTest();
-  }
+  constructor(private http: HttpClient) {}
 
   patternMatching(keyword: string) {
     return this.http.get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
@@ -37,24 +36,8 @@ export class SearchService {
   }
 
   getDetails(url: string) {
-    return this.http.get<{ JourneyDetail: { Stop: Stop[] } }>(url, {
+    return this.http.get<{ JourneyDetail: Detail }>(url, {
       headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
     });
-  }
-
-  detailTest() {
-    this.http
-      .get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
-        `https://api.vasttrafik.se/bin/rest.exe/v2/journeyDetail?ref=627375%2F248720%2F167368%2F125441%2F80%3Fdate%3D2022-09-03%26station_evaId%3D9620013%26station_type%3Ddep%26format%3Djson%26`,
-        { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
-      )
-      .subscribe((res) => console.log(res));
-
-    this.http
-      .get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
-        `https://api.vasttrafik.se/bin/rest.exe/v2/journeyDetail?ref=251271%2F86585%2F414416%2F123451%2F80%3Fdate%3D2022-09-03%26station_evaId%3D3770001%26station_type%3Ddep%26format%3Djson%26`,
-        { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
-      )
-      .subscribe((res) => console.log(res));
   }
 }

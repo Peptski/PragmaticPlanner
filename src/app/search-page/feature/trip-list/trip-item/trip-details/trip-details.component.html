@@ -1,24 +1,25 @@
 <div class="container">
-  <div class="line">
+  <div class="line" *ngFor="let detail of details">
     <div class="header">
-      <div class="line"></div>
-      <div class="type"></div>
-      <span class="direction"></span>
-      <div class="accessibility"></div>
+      <div class="line">{{ (detail.JourneyName | forcelist)[0].name }}</div>
+      <div class="type">{{ (detail.JourneyType | forcelist)[0].type }}</div>
+      <span class="direction">{{ (detail.Direction | forcelist)[0].$ }}</span>
+      <!-- <div class="accessibility"></div> -->
     </div>
 
-    <div class="notes">
+    <!-- <div class="notes">
       <div class="note">
         <div class="info-icon"></div>
         <div class="info-text">
           <p></p>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <div class="stop">
-      <span></span>
-      <span></span>
+    <div class="stop" *ngFor="let stop of detail.Stop">
+      <span>{{ stop.name }}</span>
+      <span>{{ stop.depTime }}</span>
+      <span>{{ stop.rtDepTime }}</span>
     </div>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { ForceListPipe } from 'src/app/search-page/utils/force-list.pipe';
 import { TripDetailsComponent } from './trip-details/trip-details.component';
 import { Stop } from 'src/app/search-page/utils/stop.model';
 import { SearchService } from 'src/app/search-page/data-access/search.service';
+import { Detail } from 'src/app/search-page/utils/detail.model';
 
 @Component({
   selector: 'app-trip-item',
@@ -16,7 +17,7 @@ import { SearchService } from 'src/app/search-page/data-access/search.service';
 export class TripItemComponent {
   @Input() trip!: Trip;
   @Input() url!: string;
-  details: Stop[][] = [];
+  details: Detail[] = [];
   open = false;
 
   constructor(private searchService: SearchService) {}
@@ -31,15 +32,20 @@ export class TripItemComponent {
           : [this.trip.Leg];
 
         legs.forEach((leg) => {
+          console.log(leg);
+
           if (leg.type !== 'WALK') {
             const sub = this.searchService
               .getDetails(leg.JourneyDetailRef.ref)
               .subscribe((data) => {
-                this.details.push(data.JourneyDetail.Stop);
+                this.details.push(data.JourneyDetail);
+                console.log(data);
+
                 sub.unsubscribe();
               });
           }
         });
+        console.log(this.details);
       }
       this.open = true;
     }
