@@ -22,6 +22,7 @@ export interface State {
   selectedTrip: number | null;
   searchParams: [string, string][];
   searchPattern: [string, string][];
+  extraStop: Boolean;
   time: string;
   date: string;
   mode: string;
@@ -36,9 +37,10 @@ export const initialState: State = {
     ['', ''],
   ],
   searchPattern: [],
+  extraStop: false,
   time: new Date().toLocaleTimeString().slice(0, -3),
   date: new Date().toLocaleDateString(),
-  mode: 'arrival',
+  mode: 'departure',
 };
 
 export const reducer = createReducer(
@@ -94,6 +96,12 @@ export const reducer = createReducer(
     return {
       ...state,
       date: action.date,
+    };
+  }),
+  on(SearchPageActions.toggleExtraStop, (state, action) => {
+    return {
+      ...state,
+      extraStop: action.mode,
     };
   })
 );
@@ -157,5 +165,6 @@ export const selectSearchData = createSelector(
     state.searchParams[0][1],
     state.searchParams[1][1],
     state.searchParams[2][1],
+    state.extraStop,
   ]
 );

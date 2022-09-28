@@ -4,6 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import {
   enterSubmit,
+  toggleExtraStop,
   updatePatternMatching,
   updateSearchParams,
 } from 'src/app/search-page/data-access/actions/search-page.actions';
@@ -34,7 +35,7 @@ export class SearchItemComponent implements OnInit {
     this.searchForm = new FormGroup({
       search: new FormControl({
         value: this.targetStop,
-        disabled: this.index == 1,
+        disabled: this.index == 1 && this.targetStop === '',
       }),
     });
 
@@ -46,7 +47,7 @@ export class SearchItemComponent implements OnInit {
       );
     });
 
-    if (this.index == 1) this.toggleActive();
+    if (this.index == 1 && this.targetStop === '') this.toggleActive();
   }
 
   openPattern() {
@@ -67,6 +68,7 @@ export class SearchItemComponent implements OnInit {
       this.templateElement = true;
       this.searchForm.disable();
     }
+    this.store.dispatch(toggleExtraStop({ mode: !this.templateElement }));
   }
 
   search() {

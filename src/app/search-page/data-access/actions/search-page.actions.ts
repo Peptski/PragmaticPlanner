@@ -22,3 +22,7 @@ export const updateDate = createAction(
   '[Search Page] Update date',
   props<{ date: string }>()
 );
+export const toggleExtraStop = createAction(
+  '[Search Page] Toggle extra stop',
+  props<{ mode: boolean }>()
+);

@@ -28,9 +28,17 @@ export class SearchApiEffects {
     return this.actions$.pipe(
       ofType(buttonSubmit, enterSubmit),
       withLatestFrom(this.store.select(selectSearchData)),
-      concatMap(([_, [mode, time, date, from, to, via]]) => {
+      concatMap(([_, [mode, time, date, from, to, via, extraStop]]) => {
         return this.searchService
-          .searchTrip(mode, time, date, from, to, via)
+          .searchTrip(
+            <string>mode,
+            <string>time,
+            <string>date,
+            <string>from,
+            <string>to,
+            <string>via,
+            <string>extraStop
+          )
           .pipe(
             map((data: { TripList: { Trip: Trip[] } }) =>
               apiTripSuccess({ trips: data })

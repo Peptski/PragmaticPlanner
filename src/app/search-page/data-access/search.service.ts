@@ -23,11 +23,12 @@ export class SearchService {
     date: string,
     from: string,
     via: string,
-    to: string
+    to: string,
+    extraStop: string
   ) {
     let query = 'https://api.vasttrafik.se/bin/rest.exe/v2/trip';
     query += `?originId=${from}&destId=${to}&date=${date}&time=${time}&format=json`;
-    if (via !== '') query += `&viaId=${via}`;
+    if (via !== '' && extraStop) query += `&viaId=${via}`;
     if (mode === 'arrival') query += '&searchForArrival=1';
 
     return this.http.get<{ TripList: { Trip: Trip[] } }>(query, {
