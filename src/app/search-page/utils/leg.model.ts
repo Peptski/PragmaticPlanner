@@ -36,6 +36,9 @@ export class Leg {
     },
     public JourneyDetailRef: {
       ref: string;
+    },
+    public Notes?: {
+      Note: { $: string };
     }
   ) {}
 }

@@ -1,6 +1,6 @@
 .settings {
   height: 5rem;
-  background-color: #475569;
+  background-color: #1c222a;
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -22,15 +22,16 @@
 .btn-mode {
   height: 100%;
   width: 100%;
-  background-color: #cbd5e1;
-  color: #1e293b;
+  background-color: #b5bbc3;
+  color: #0e1115;
   font-size: 1.2rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .btn-mode.active {
-  background-color: #1e293b;
-  color: #cbd5e1;
+  background-color: #0e1115;
+  color: #b5bbc3;
 }
 
 .date {
@@ -43,7 +44,7 @@
 
 .time,
 .date {
-  color: #1e293b;
+  color: #0e1115;
   height: 2rem;
   border-radius: 12px;
   font-size: 1.2rem;
@@ -56,13 +57,14 @@
   border-radius: 12px;
   font-size: 1.2rem;
   font-weight: 700;
-  color: #1e293b;
-  background-color: #cbd5e1;
+  color: #0e1115;
+  background-color: #b5bbc3;
 }
 
 .btn-submit:hover {
-  background-color: #1e293b;
-  color: #cbd5e1;
+  background-color: #2b333f;
+  color: #b5bbc3;
+  cursor: pointer;
 }
 
 form {

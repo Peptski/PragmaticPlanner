@@ -31,21 +31,19 @@ export class TripItemComponent {
           ? this.trip.Leg
           : [this.trip.Leg];
 
+        let i = 0;
         legs.forEach((leg) => {
-          console.log(leg);
-
           if (leg.type !== 'WALK') {
+            let index = i;
+            i++;
             const sub = this.searchService
               .getDetails(leg.JourneyDetailRef.ref)
               .subscribe((data) => {
-                this.details.push(data.JourneyDetail);
-                console.log(data);
-
+                this.details[index] = data.JourneyDetail;
                 sub.unsubscribe();
               });
           }
         });
-        console.log(this.details);
       }
       this.open = true;
     }
