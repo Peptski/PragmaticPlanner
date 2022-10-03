@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { environment } from './environments/environment';
 import { reducer } from './app/search-page/data-access/reducers/search.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { SearchApiEffects } from './app/search-page/data-access/effects/search-api.effects';
+import { AuthInterceptor } from './app/search-page/utils/auth.interceptor';
 
 if (environment.production) {
   enableProdMode();
@@ -16,6 +17,11 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     importProvidersFrom(
       AppRoutingModule,
       HttpClientModule,

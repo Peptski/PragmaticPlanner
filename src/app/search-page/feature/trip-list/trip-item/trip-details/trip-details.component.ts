@@ -20,7 +20,6 @@ export class TripDetailsComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.details, this.trip, this.content);
     setTimeout(() => {
       this.details.forEach((detail) => {
         let correctName = Array.isArray(detail.JourneyName)

@@ -10,10 +10,7 @@ import {
   updateTime,
   updateTimeMode,
 } from '../../data-access/actions/search-page.actions';
-import {
-  selectMode,
-  selectSearchData,
-} from '../../data-access/reducers/search.reducer';
+import { selectMode } from '../../data-access/reducers/search.reducer';
 
 @Component({
   selector: 'app-settings',

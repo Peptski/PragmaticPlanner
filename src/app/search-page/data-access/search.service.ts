@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { API_ACCESS } from '../utils/auth.service';
 import { Stop } from '../utils/stop.model';
 import { Trip } from '../utils/trip.model';
 import { Detail } from '../utils/detail.model';
@@ -11,8 +10,7 @@ export class SearchService {
 
   patternMatching(keyword: string) {
     return this.http.get<{ LocationList: { StopLocation: Stop[] | Stop } }>(
-      `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${keyword}&format=json`,
-      { headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }) }
+      `https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=${keyword}&format=json`
     );
   }
 
@@ -30,14 +28,26 @@ export class SearchService {
     if (via !== '' && extraStop) query += `&viaId=${via}`;
     if (mode === 'arrival') query += '&searchForArrival=1';
 
-    return this.http.get<{ TripList: { Trip: Trip[] } }>(query, {
-      headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
-    });
+    return this.http.get<{ TripList: { Trip: Trip[] } }>(query);
   }
 
   getDetails(url: string) {
-    return this.http.get<{ JourneyDetail: Detail }>(url, {
-      headers: new HttpHeaders({ Authorization: `Bearer ${API_ACCESS}` }),
-    });
+    return this.http.get<{ JourneyDetail: Detail }>(url);
+  }
+
+  newToken() {
+    this.http
+      .post<{ access_token: string }>(
+        'https://api.vasttrafik.se/token',
+        'grant_type=client_credentials',
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization:
+              'Basic WTl2OEUxU3Jncnlka3VTVDQ0Wm9UZ3ZhS2VzYTpZckQ2ZlNXWE1maXVPaUNsUVExT25WeUtPbndh',
+          },
+        }
+      )
+      .subscribe((res) => localStorage.setItem('token', res.access_token));
   }
 }
