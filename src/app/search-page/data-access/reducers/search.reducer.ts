@@ -1,4 +1,3 @@
-import { state } from '@angular/animations';
 import {
   createFeatureSelector,
   createReducer,

@@ -11,11 +11,13 @@ import {
 } from 'src/app/search-page/data-access/actions/search-page.actions';
 import { selectPatternMatching } from 'src/app/search-page/data-access/reducers/search.reducer';
 import { Observable } from 'rxjs';
+import { ForceListPipe } from 'src/app/search-page/utils/force-list.pipe';
+import { MaxTenPipe } from 'src/app/search-page/utils/most-ten.pipe';
 
 @Component({
   selector: 'app-search-item',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ForceListPipe, MaxTenPipe],
   templateUrl: './search-item.component.html',
   styleUrls: ['./search-item.component.css'],
 })
@@ -29,7 +31,7 @@ export class SearchItemComponent implements OnInit {
   patternMatching$: Observable<string[][]>;
 
   constructor(private store: Store) {
-    this.patternMatching$ = store.select(selectPatternMatching);
+    this.patternMatching$ = this.store.select(selectPatternMatching);
   }
 
   ngOnInit(): void {

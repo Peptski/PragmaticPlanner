@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Stop } from '../utils/stop.model';
 import { Trip } from '../utils/trip.model';
 import { Detail } from '../utils/detail.model';

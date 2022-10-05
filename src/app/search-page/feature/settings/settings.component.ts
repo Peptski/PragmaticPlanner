@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { SearchService } from '../../data-access/search.service';
 import { Store } from '@ngrx/store';
 import {
   buttonSubmit,
@@ -23,7 +22,7 @@ export class SettingsComponent {
   mode$: Observable<string>;
   dateForm: FormGroup;
 
-  constructor(private searchService: SearchService, private store: Store) {
+  constructor(private store: Store) {
     let date = new Date();
     this.dateForm = new FormGroup({
       time: new FormControl(date.toLocaleTimeString().slice(0, -3)),

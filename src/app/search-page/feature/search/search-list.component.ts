@@ -16,6 +16,6 @@ export class SearchComponent {
   searchItems$: Observable<string[][]>;
 
   constructor(private store: Store) {
-    this.searchItems$ = store.select(selectSearchParams);
+    this.searchItems$ = this.store.select(selectSearchParams);
   }
 }
