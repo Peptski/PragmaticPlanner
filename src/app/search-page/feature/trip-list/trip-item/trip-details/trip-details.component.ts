@@ -22,16 +22,19 @@ import { Stop } from 'src/app/search-page/utils/stop.model';
 export class TripDetailsComponent implements OnInit {
   @Input() trip: Trip = { Leg: [] };
   details$: Observable<{ details: Stop[]; leg: Leg }[]>;
+  count = 0;
 
   constructor(private store: Store) {
     this.details$ = this.store.select(selectDetails);
   }
 
   ngOnInit(): void {
+    this.count = 0;
     this.store.dispatch(clearDetails());
     const legs = Array.isArray(this.trip.Leg) ? this.trip.Leg : [this.trip.Leg];
     legs.forEach((leg) => {
       if (leg.type !== 'WALK') {
+        this.count++;
         this.store.dispatch(
           getDetails({ url: leg.JourneyDetailRef.ref, leg: leg })
         );

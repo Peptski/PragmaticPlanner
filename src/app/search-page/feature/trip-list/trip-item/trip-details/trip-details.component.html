@@ -1,4 +1,4 @@
-<div class="container" *ngIf="details$ | async">
+<div class="container" *ngIf="(details$ | async)?.length === count">
   <div class="line" *ngFor="let line of details$ | async">
     <div class="header">
       <div class="line-info">
@@ -32,6 +32,6 @@
   </div>
 </div>
 
-<div class="container" *ngIf="!(details$ | async)">
+<div class="container" *ngIf="!((details$ | async)?.length === count)">
   <div class="spinner"></div>
 </div>
