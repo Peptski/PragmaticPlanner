@@ -17,6 +17,6 @@ export class TripListComponent {
   trips$: Observable<Trip[]>;
 
   constructor(private store: Store) {
-    this.trips$ = store.select(selectTrips);
+    this.trips$ = this.store.select(selectTrips);
   }
 }

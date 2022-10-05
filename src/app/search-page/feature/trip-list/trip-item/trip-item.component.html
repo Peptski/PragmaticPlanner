@@ -34,8 +34,4 @@
   </div>
 </div>
 
-<app-trip-details
-  *ngIf="open"
-  [details]="details"
-  [trip]="trip"
-></app-trip-details>
+<app-trip-details *ngIf="open" [trip]="trip"></app-trip-details>

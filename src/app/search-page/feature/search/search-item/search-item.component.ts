@@ -54,7 +54,9 @@ export class SearchItemComponent implements OnInit {
   }
 
   openPattern() {
-    this.pattern = !this.pattern;
+    setTimeout(() => {
+      this.pattern = true;
+    }, 150);
   }
 
   closePattern() {

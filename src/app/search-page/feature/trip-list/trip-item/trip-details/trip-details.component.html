@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="done">
   <div class="line" *ngFor="let con of content">
     <div class="header">
       <div class="line-info">{{ con[1].name }} - {{ con[1].direction }}</div>
@@ -25,6 +25,11 @@
           : stop.arrTime
       }}</span>
       <span>{{ stop.name }}</span>
+      <span>{{ stop.track }}</span>
     </div>
   </div>
+</div>
+
+<div class="container" *ngIf="!done">
+  <div class="spinner"></div>
 </div>

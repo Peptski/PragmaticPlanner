@@ -13,3 +13,9 @@ export const apiTripSuccess = createAction(
   props<{ trips: { TripList: { Trip: Trip[] } } }>()
 );
 export const apiTripFail = createAction('[Search API] API trip fail');
+
+export const apiDetailsSuccess = createAction(
+  '[Search API] API details success',
+  props<{ trips: { TripList: { Trip: Trip[] } } }>()
+);
+export const apiDetailsFail = createAction('[Search API] API details fail');
