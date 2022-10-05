@@ -4,7 +4,10 @@ import { ForceListPipe } from 'src/app/search-page/utils/force-list.pipe';
 import { Trip } from 'src/app/search-page/utils/trip.model';
 import { Leg } from 'src/app/search-page/utils/leg.model';
 import { Store } from '@ngrx/store';
-import { getDetails } from 'src/app/search-page/data-access/actions/search-page.actions';
+import {
+  clearDetails,
+  getDetails,
+} from 'src/app/search-page/data-access/actions/search-page.actions';
 import { selectDetails } from 'src/app/search-page/data-access/reducers/search.reducer';
 import { Observable } from 'rxjs';
 import { Stop } from 'src/app/search-page/utils/stop.model';
@@ -25,6 +28,7 @@ export class TripDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.store.dispatch(clearDetails());
     const legs = Array.isArray(this.trip.Leg) ? this.trip.Leg : [this.trip.Leg];
     legs.forEach((leg) => {
       if (leg.type !== 'WALK') {

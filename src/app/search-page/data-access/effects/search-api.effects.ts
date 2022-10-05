@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concatMap, map, withLatestFrom } from 'rxjs';
+import { concatMap, map, withLatestFrom, catchError, Observable } from 'rxjs';
 import { Detail } from '../../utils/detail.model';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';

@@ -24,7 +24,7 @@ export interface AppState {
 export interface State {
   trips: Trip[];
   details: { details: Stop[]; leg: Leg }[];
-  selectedTrip: number | null;
+  open: number;
   searchParams: [string, string][];
   searchPattern: [string, string][];
   extraStop: Boolean;
@@ -36,7 +36,7 @@ export interface State {
 export const initialState: State = {
   trips: [],
   details: [],
-  selectedTrip: null,
+  open: -1,
   searchParams: [
     ['', ''],
     ['', ''],
@@ -133,10 +133,28 @@ export const reducer = createReducer(
       extraStop: action.mode,
     };
   }),
-  on(SearchPageActions.swapDestOrigin, (state, action) => {
+  on(SearchPageActions.swapDestOrigin, (state) => {
     return {
       ...state,
       searchParams: state.searchParams.slice().reverse(),
+    };
+  }),
+  on(SearchPageActions.clearDetails, (state) => {
+    return {
+      ...state,
+      details: [],
+    };
+  }),
+  on(SearchPageActions.openTrip, (state, action) => {
+    return {
+      ...state,
+      open: action.id === state.open ? -1 : action.id,
+    };
+  }),
+  on(SearchPageActions.clearOpen, (state) => {
+    return {
+      ...state,
+      open: -1,
     };
   })
 );
@@ -157,18 +175,9 @@ export const selectTrips = createSelector(
   (state) => state.trips
 );
 
-export const selectSelectedTripId = createSelector(
+export const selectOpenId = createSelector(
   selectSearchPageState,
-  (state) => state.selectedTrip
-);
-
-export const selectSelectedTrip = createSelector(
-  selectTrips,
-  selectSelectedTripId,
-  (trips, id) => {
-    if (!id) return undefined;
-    return trips[id];
-  }
+  (state) => state.open
 );
 
 export const selectSearchParams = createSelector(

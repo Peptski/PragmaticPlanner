@@ -27,11 +27,14 @@
     <div class="icon">
       <i
         class="ph-caret-down"
-        [ngClass]="{ active: open }"
+        [ngClass]="{ active: (open$ | async) === id }"
         (click)="handleDetails()"
       ></i>
     </div>
   </div>
 </div>
 
-<app-trip-details *ngIf="open" [trip]="trip"></app-trip-details>
+<app-trip-details
+  *ngIf="(open$ | async) === id"
+  [trip]="trip"
+></app-trip-details>
