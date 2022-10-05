@@ -1,20 +1,22 @@
-<div class="container" *ngIf="done">
-  <div class="line" *ngFor="let con of content">
+<div class="container" *ngIf="details$ | async">
+  <div class="line" *ngFor="let line of details$ | async">
     <div class="header">
-      <div class="line-info">{{ con[1].name }} - {{ con[1].direction }}</div>
-      <i class="ph-wheelchair" *ngIf="con[1].accessibility"></i>
+      <div class="line-info">
+        {{ line.leg.name }} - {{ line.leg.direction }}
+      </div>
+      <i class="ph-wheelchair" *ngIf="line.leg.accessibility"></i>
     </div>
 
-    <div class="notes" *ngIf="con[1]?.Notes">
+    <div class="notes" *ngIf="line.leg?.Notes">
       <div class="note">
         <i class="ph-info"></i>
         <div class="info-text">
-          <p>{{ con[1].Notes?.Note?.$ }}</p>
+          <p>{{ line.leg.Notes?.Note?.$ }}</p>
         </div>
       </div>
     </div>
 
-    <div class="stop" *ngFor="let stop of con[0].Stop; let i = index">
+    <div class="stop" *ngFor="let stop of line.details; let i = index">
       <span class="time">{{
         i == 0
           ? stop?.rtDepTime
@@ -30,6 +32,6 @@
   </div>
 </div>
 
-<div class="container" *ngIf="!done">
+<div class="container" *ngIf="!(details$ | async)">
   <div class="spinner"></div>
 </div>

@@ -48,6 +48,9 @@ export class SearchService {
           },
         }
       )
-      .subscribe((res) => localStorage.setItem('token', res.access_token));
+      .subscribe(
+        (res) => localStorage.setItem('token', res.access_token),
+        (error) => console.log(error)
+      );
   }
 }

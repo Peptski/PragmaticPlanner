@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { Leg } from '../../utils/leg.model';
 
 export const enterSubmit = createAction('[Search Page] Enter submit');
 export const buttonSubmit = createAction('[Search Page] Button submit');
@@ -27,3 +28,8 @@ export const toggleExtraStop = createAction(
   props<{ mode: boolean }>()
 );
 export const swapDestOrigin = createAction('[Search Page] Swap dest/origin');
+
+export const getDetails = createAction(
+  '[Search Page] Get details',
+  props<{ url: string; leg: Leg }>()
+);

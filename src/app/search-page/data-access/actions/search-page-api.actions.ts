@@ -1,4 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import { Detail } from '../../utils/detail.model';
+import { Leg } from '../../utils/leg.model';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
 
@@ -16,6 +18,6 @@ export const apiTripFail = createAction('[Search API] API trip fail');
 
 export const apiDetailsSuccess = createAction(
   '[Search API] API details success',
-  props<{ trips: { TripList: { Trip: Trip[] } } }>()
+  props<{ details: { JourneyDetail: Detail }; leg: Leg }>()
 );
 export const apiDetailsFail = createAction('[Search API] API details fail');

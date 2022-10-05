@@ -15,8 +15,6 @@ import { Detail } from 'src/app/search-page/utils/detail.model';
 })
 export class TripItemComponent {
   @Input() trip!: Trip;
-  @Input() url!: string;
-  details: Detail[] = [];
   open = false;
 
   handleDetails() {

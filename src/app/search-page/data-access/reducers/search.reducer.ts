@@ -4,12 +4,16 @@ import {
   createSelector,
   on,
 } from '@ngrx/store';
+import { Leg } from '../../utils/leg.model';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
 import {
+  apiDetailsSuccess,
+  apiDetailsFail,
   apiPatternSuccess,
-  apiTripFail,
+  apiPatternFail,
   apiTripSuccess,
+  apiTripFail,
 } from '../actions/search-page-api.actions';
 import * as SearchPageActions from '../actions/search-page.actions';
 
@@ -19,6 +23,7 @@ export interface AppState {
 
 export interface State {
   trips: Trip[];
+  details: { details: Stop[]; leg: Leg }[];
   selectedTrip: number | null;
   searchParams: [string, string][];
   searchPattern: [string, string][];
@@ -30,6 +35,7 @@ export interface State {
 
 export const initialState: State = {
   trips: [],
+  details: [],
   selectedTrip: null,
   searchParams: [
     ['', ''],
@@ -49,6 +55,29 @@ export const reducer = createReducer(
     return {
       ...state,
       trips: action.trips.TripList.Trip,
+      details: [],
+    };
+  }),
+  on(apiDetailsSuccess, (state, action) => {
+    let include = false;
+    const origin = action.leg.Origin.name;
+    const dest = action.leg.Destination.name;
+    return {
+      ...state,
+      details: [
+        ...state.details,
+        {
+          details: <Stop[]>action.details.JourneyDetail.Stop.filter((stop) => {
+            if (stop.name === origin) include = true;
+            if (stop.name === dest) {
+              include = false;
+              return true;
+            }
+            return include;
+          }),
+          leg: action.leg,
+        },
+      ],
     };
   }),
   on(apiPatternSuccess, (state, action) => {
@@ -173,4 +202,9 @@ export const selectSearchData = createSelector(
     state.searchParams[2][1],
     state.extraStop,
   ]
+);
+
+export const selectDetails = createSelector(
+  selectSearchPageState,
+  (state) => state.details
 );

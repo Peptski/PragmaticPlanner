@@ -2,15 +2,18 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { concatMap, map, withLatestFrom } from 'rxjs';
+import { Detail } from '../../utils/detail.model';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
 import {
+  apiDetailsSuccess,
   apiPatternSuccess,
   apiTripSuccess,
 } from '../actions/search-page-api.actions';
 import {
   buttonSubmit,
   enterSubmit,
+  getDetails,
   updatePatternMatching,
 } from '../actions/search-page.actions';
 import { selectSearchData } from '../reducers/search.reducer';
@@ -57,6 +60,21 @@ export class SearchApiEffects {
           .pipe(
             map((data: { LocationList: { StopLocation: Stop[] | Stop } }) =>
               apiPatternSuccess({ patterns: data.LocationList })
+            )
+          );
+      })
+    );
+  });
+
+  loadDetails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getDetails),
+      concatMap((action) => {
+        return this.searchService
+          .getDetails(action.url)
+          .pipe(
+            map((data: { JourneyDetail: Detail }) =>
+              apiDetailsSuccess({ details: data, leg: action.leg })
             )
           );
       })
