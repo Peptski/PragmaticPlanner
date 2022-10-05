@@ -14,9 +14,15 @@
       </div>
     </div>
 
-    <div class="stop" *ngFor="let stop of con[0].Stop">
+    <div class="stop" *ngFor="let stop of con[0].Stop; let i = index">
       <span class="time">{{
-        stop?.rtDepTime ? stop.rtArrTime : stop.arrTime
+        i == 0
+          ? stop?.rtDepTime
+            ? stop.rtDepTime
+            : stop.depTime
+          : stop?.rtArrTime
+          ? stop.rtArrTime
+          : stop.arrTime
       }}</span>
       <span>{{ stop.name }}</span>
     </div>

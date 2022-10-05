@@ -40,5 +40,9 @@ export class TripDetailsComponent implements OnInit {
         this.content.push([detail, match]);
       });
     }, 250);
+
+    setTimeout(() => {
+      console.log(this.content);
+    }, 1000);
   }
 }
