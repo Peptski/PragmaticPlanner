@@ -1,4 +1,7 @@
 <div class="container">
+  <div class="error" *ngIf="error$ | async">
+    <span> {{ error$ | async | errortext }} </span>
+  </div>
   <app-search-list></app-search-list>
   <app-settings></app-settings>
   <app-trip-list></app-trip-list>

@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import {
-  concatMap,
-  map,
-  withLatestFrom,
-  catchError,
-  Observable,
-  of,
-} from 'rxjs';
+import { concatMap, map, withLatestFrom, catchError, of } from 'rxjs';
 import { Detail } from '../../utils/detail.model';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
@@ -23,6 +16,7 @@ import {
 import {
   buttonSubmit,
   enterSubmit,
+  errorHandled,
   getDetails,
   updatePatternMatching,
 } from '../actions/search-page.actions';
@@ -55,9 +49,15 @@ export class SearchApiEffects {
           .pipe(
             catchError((err) => {
               if (err.status === 401) this.searchService.newToken();
+
               this.store.dispatch(
                 apiTripFail({ error: err.status.toString() })
               );
+
+              setTimeout(() => {
+                this.store.dispatch(errorHandled());
+              }, 3500);
+
               return of();
             }),
             map((data: { TripList: { Trip: Trip[] } }) =>
@@ -75,9 +75,15 @@ export class SearchApiEffects {
         return this.searchService.patternMatching(action.search).pipe(
           catchError((err: { status: number }) => {
             if (err.status === 401) this.searchService.newToken();
+
             this.store.dispatch(
               apiPatternFail({ error: err.status.toString() })
             );
+
+            setTimeout(() => {
+              this.store.dispatch(errorHandled());
+            }, 3500);
+
             return of();
           }),
           map((data: { LocationList: { StopLocation: Stop[] | Stop } }) =>
@@ -95,9 +101,15 @@ export class SearchApiEffects {
         return this.searchService.getDetails(action.url).pipe(
           catchError((err) => {
             if (err.status === 401) this.searchService.newToken();
+
             this.store.dispatch(
               apiDetailsFail({ error: err.status.toString() })
             );
+
+            setTimeout(() => {
+              this.store.dispatch(errorHandled());
+            }, 3500);
+
             return of();
           }),
           map((data: { JourneyDetail: Detail }) =>
