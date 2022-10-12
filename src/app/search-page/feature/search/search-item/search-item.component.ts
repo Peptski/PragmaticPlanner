@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,7 @@ import { MaxTenPipe } from 'src/app/search-page/utils/most-ten.pipe';
   templateUrl: './search-item.component.html',
   styleUrls: ['./search-item.component.css'],
 })
-export class SearchItemComponent implements OnInit {
+export class SearchItemComponent implements OnInit, AfterViewInit {
   @Input() targetStop!: string;
   @Input() index!: number;
   pattern = false;
@@ -42,6 +42,10 @@ export class SearchItemComponent implements OnInit {
       }),
     });
 
+    if (this.index == 1 && this.targetStop === '') this.toggleActive();
+  }
+
+  ngAfterViewInit(): void {
     this.searchForm.valueChanges.subscribe((data) => {
       this.store.dispatch(
         updatePatternMatching({
@@ -49,8 +53,6 @@ export class SearchItemComponent implements OnInit {
         })
       );
     });
-
-    if (this.index == 1 && this.targetStop === '') this.toggleActive();
   }
 
   openPattern() {

@@ -47,4 +47,6 @@ export const openTrip = createAction(
   props<{ id: number }>()
 );
 
-export const clearOpen = createAction('[Pearch Page] Close trip');
+export const clearOpen = createAction('[Search Page] Close trip');
+
+export const errorHandled = createAction('[Search Page] Error handled');

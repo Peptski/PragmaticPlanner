@@ -1,13 +1,23 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concatMap, map, withLatestFrom, catchError, Observable } from 'rxjs';
+import {
+  concatMap,
+  map,
+  withLatestFrom,
+  catchError,
+  Observable,
+  of,
+} from 'rxjs';
 import { Detail } from '../../utils/detail.model';
 import { Stop } from '../../utils/stop.model';
 import { Trip } from '../../utils/trip.model';
 import {
+  apiDetailsFail,
   apiDetailsSuccess,
+  apiPatternFail,
   apiPatternSuccess,
+  apiTripFail,
   apiTripSuccess,
 } from '../actions/search-page-api.actions';
 import {
@@ -43,6 +53,13 @@ export class SearchApiEffects {
             <string>extraStop
           )
           .pipe(
+            catchError((err) => {
+              if (err.status === 401) this.searchService.newToken();
+              this.store.dispatch(
+                apiTripFail({ error: err.status.toString() })
+              );
+              return of();
+            }),
             map((data: { TripList: { Trip: Trip[] } }) =>
               apiTripSuccess({ trips: data })
             )
@@ -55,13 +72,18 @@ export class SearchApiEffects {
     return this.actions$.pipe(
       ofType(updatePatternMatching),
       concatMap((action) => {
-        return this.searchService
-          .patternMatching(action.search)
-          .pipe(
-            map((data: { LocationList: { StopLocation: Stop[] | Stop } }) =>
-              apiPatternSuccess({ patterns: data.LocationList })
-            )
-          );
+        return this.searchService.patternMatching(action.search).pipe(
+          catchError((err: { status: number }) => {
+            if (err.status === 401) this.searchService.newToken();
+            this.store.dispatch(
+              apiPatternFail({ error: err.status.toString() })
+            );
+            return of();
+          }),
+          map((data: { LocationList: { StopLocation: Stop[] | Stop } }) =>
+            apiPatternSuccess({ patterns: data.LocationList })
+          )
+        );
       })
     );
   });
@@ -70,13 +92,18 @@ export class SearchApiEffects {
     return this.actions$.pipe(
       ofType(getDetails),
       concatMap((action) => {
-        return this.searchService
-          .getDetails(action.url)
-          .pipe(
-            map((data: { JourneyDetail: Detail }) =>
-              apiDetailsSuccess({ details: data, leg: action.leg })
-            )
-          );
+        return this.searchService.getDetails(action.url).pipe(
+          catchError((err) => {
+            if (err.status === 401) this.searchService.newToken();
+            this.store.dispatch(
+              apiDetailsFail({ error: err.status.toString() })
+            );
+            return of();
+          }),
+          map((data: { JourneyDetail: Detail }) =>
+            apiDetailsSuccess({ details: data, leg: action.leg })
+          )
+        );
       })
     );
   });

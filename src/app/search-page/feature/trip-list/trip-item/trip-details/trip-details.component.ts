@@ -35,9 +35,11 @@ export class TripDetailsComponent implements OnInit {
     legs.forEach((leg) => {
       if (leg.type !== 'WALK') {
         this.count++;
-        this.store.dispatch(
-          getDetails({ url: leg.JourneyDetailRef.ref, leg: leg })
-        );
+        try {
+          this.store.dispatch(
+            getDetails({ url: leg.JourneyDetailRef.ref, leg: leg })
+          );
+        } catch (error) {}
       }
     });
   }

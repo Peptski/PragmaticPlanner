@@ -31,6 +31,7 @@ export interface State {
   time: string;
   date: string;
   mode: string;
+  error: string;
 }
 
 export const initialState: State = {
@@ -47,6 +48,7 @@ export const initialState: State = {
   time: new Date().toLocaleTimeString().slice(0, -3),
   date: new Date().toLocaleDateString(),
   mode: 'departure',
+  error: '',
 };
 
 export const reducer = createReducer(
@@ -81,20 +83,28 @@ export const reducer = createReducer(
     };
   }),
   on(apiPatternSuccess, (state, action) => {
+    if (!action.patterns.StopLocation) {
+      return {
+        ...state,
+        searchPattern: [],
+      };
+    }
+
     if (Array.isArray(action.patterns.StopLocation)) {
       return {
         ...state,
         searchPattern: action.patterns.StopLocation.map((ele) => [
           ele.name,
-          String(ele.id),
+          ele.id.toString(),
         ]),
       };
     }
+
     return {
       ...state,
       searchPattern: [<Stop>action.patterns.StopLocation].map((ele) => [
         ele.name,
-        String(ele.id),
+        ele.id.toString(),
       ]),
     };
   }),
@@ -104,7 +114,7 @@ export const reducer = createReducer(
       searchParams: state.searchParams
         .slice()
         .map((ele, i) =>
-          action.index === i ? [action.name, String(action.id)] : ele
+          action.index === i ? [action.name, action.id.toString()] : ele
         ),
       searchPattern: [],
     };
@@ -156,6 +166,18 @@ export const reducer = createReducer(
       ...state,
       open: -1,
     };
+  }),
+  on(apiTripFail, (state, action) => {
+    return { ...state, error: action.error };
+  }),
+  on(apiDetailsFail, (state, action) => {
+    return { ...state, error: action.error };
+  }),
+  on(apiPatternFail, (state, action) => {
+    return { ...state, error: action.error };
+  }),
+  on(SearchPageActions.errorHandled, (state) => {
+    return { ...state, error: '' };
   })
 );
 
@@ -216,4 +238,9 @@ export const selectSearchData = createSelector(
 export const selectDetails = createSelector(
   selectSearchPageState,
   (state) => state.details
+);
+
+export const selectError = createSelector(
+  selectSearchPageState,
+  (state) => state.error
 );
