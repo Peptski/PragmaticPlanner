@@ -1,5 +1,5 @@
 .container {
-  width: 70rem;
+  width: 100%;
   margin: 0 auto;
   margin-top: 5rem;
   display: flex;
@@ -23,4 +23,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+app-search-list,
+app-settings,
+app-trip-list {
+  display: flex;
+  justify-content: center;
 }

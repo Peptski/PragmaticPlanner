@@ -20,18 +20,23 @@
   </div>
 
   <form [formGroup]="dateForm" (ngSubmit)="search()">
-    <input
-      class="time"
-      type="time"
-      formControlName="time"
-      (change)="updateTime($event)"
-    />
-    <input
-      class="date"
-      type="date"
-      formControlName="date"
-      (change)="updateDate($event)"
-    />
+    <div class="input-container">
+      <input
+        class="time"
+        type="time"
+        formControlName="time"
+        (change)="updateTime($event)"
+      />
+    </div>
+
+    <div class="input-container">
+      <input
+        class="date"
+        type="date"
+        formControlName="date"
+        (change)="updateDate($event)"
+      />
+    </div>
 
     <button type="submit" class="btn-submit">Search</button>
   </form>

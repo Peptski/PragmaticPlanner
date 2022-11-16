@@ -2,7 +2,7 @@
   <div class="line" *ngFor="let line of details$ | async">
     <div class="header">
       <div class="line-info">
-        {{ line.leg.name }} - {{ line.leg.direction }}
+        {{ line.leg.name }} - {{ line.leg.direction.split(",")[0] }}
       </div>
       <i class="ph-wheelchair" *ngIf="line.leg.accessibility"></i>
     </div>
@@ -26,7 +26,7 @@
           ? stop.rtArrTime
           : stop.arrTime
       }}</span>
-      <span>{{ stop.name }}</span>
+      <span>{{ stop.name.split(",")[0] }}</span>
       <span>{{ stop.track }}</span>
     </div>
   </div>

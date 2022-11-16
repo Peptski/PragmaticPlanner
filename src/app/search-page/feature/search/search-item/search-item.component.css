@@ -72,7 +72,7 @@ input {
 
 .container {
   position: absolute;
-  left: 22rem;
+  left: 2.4rem;
   z-index: 2;
   background-color: #242b35;
   color: #b5bbc3;
@@ -87,4 +87,14 @@ input {
 
 .container:hover {
   background-color: #323b4a;
+}
+
+@media only screen and (max-width: 752px) {
+  input {
+    width: 14rem;
+  }
+
+  .search-item {
+    width: 23rem;
+  }
 }
